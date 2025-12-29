@@ -21,7 +21,7 @@ struct ContentView: View {
     ]
 
     let nextweeks: [String] = [
-        "NW", "2W", "3W"
+        "1W", "2W", "3W"
     ]
     
 

@@ -16,7 +16,6 @@ struct DayView: View {
     var body: some View {
             VStack{
                 ForEach (0..<min(3, dayTasks.count), id: \.self) { dayTask in
-                    HStack{ // bara för att se kopplingen, ta bort sen
                     Text("\(weekday) \(dayTasks[dayTask])")
                         .foregroundStyle(Color.gray)
                         .font(.system(size: 10))
@@ -25,7 +24,7 @@ struct DayView: View {
 //                            .foregroundStyle(Color.gray)
 //                            .font(.system(size: 10))
 //                    }
-                    }
+                    
                 }
 
             }
