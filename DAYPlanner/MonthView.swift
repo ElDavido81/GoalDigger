@@ -8,7 +8,7 @@
 import SwiftUI
 
 let tasks = [
-    "äta", "sova", "bajsa"
+    "äta", "sova", "bajsa", "dricka"
 ]
 
 
@@ -19,6 +19,7 @@ struct MonthView: View {
                 Text("\(task)")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundStyle(Color.gray)
+                    .font(.system(size: 10))
 //                    .border(Color.red, width: 1)
             }
         }

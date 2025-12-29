@@ -14,20 +14,22 @@ struct DayView: View {
     var weekday: String
     
     var body: some View {
-            VStack{
-                ForEach (0..<min(3, dayTasks.count), id: \.self) { dayTask in
-                    Text("\(weekday) \(dayTasks[dayTask])")
-                        .foregroundStyle(Color.gray)
+        HStack(spacing: 0){
+                ForEach (0..<min(1, dayTasks.count), id: \.self) { dayTask in
+                    Text("\(weekday) \(dayTasks[dayTask]) ")
+                        .foregroundStyle(Color.black)
                         .font(.system(size: 10))
-//                    if (dayTask == min(3, dayTasks.count) - 1 && dayTasks.count > 3) {
-//                        Text("...")
-//                            .foregroundStyle(Color.gray)
-//                            .font(.system(size: 10))
-//                    }
+                    if (dayTask == min(1, dayTasks.count) - 1 && dayTasks.count > 3) {
+                        Text("...")
+                            .foregroundStyle(Color.black)
+                            .font(.system(size: 10))
+                    }
                     
                 }
 
             }
+            .frame(alignment: .leading)
+            .padding(2)
         }
 }
 #Preview {

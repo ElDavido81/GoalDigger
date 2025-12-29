@@ -14,7 +14,7 @@ let months = [
 ]
 
 let weekdays = [
-    "M", "T", "W", "TH", "F", "S", "SU"
+    "M", "T", "W", "T", "F", "S", "S"
 ]
 
 let nextweeks: [String] = [
@@ -28,16 +28,25 @@ struct GridView: View {
     func showWeekdays() -> some View {
         ForEach(weekdays, id: \.self) { index in
             HStack(spacing: 0) {
+
+                Rectangle()
+                    .frame(width: 5)
+                    .opacity(0)
+                
                 Text(index)
                     .foregroundStyle(.black)
                     .font(.system(size: 10))
-                    .frame(maxHeight: .infinity) // ← gör raden flexibel
                 DayView(weekday: index)
-                    .frame(maxHeight: .infinity)
+                Spacer()
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .border(Color.red, width: 1)
-            
+            .frame(maxHeight: .infinity)
+            .frame(maxWidth: .infinity)
+            .background(Color.blue.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .cornerRadius(5) // Rundade hörn för hela HStack
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                )
             
             .onTapGesture {
                 switch index {
@@ -67,15 +76,26 @@ struct GridView: View {
     func showNextWeeks() -> some View {
         ForEach(nextweeks, id: \.self) { week in
             HStack(spacing: 0) {
+                
+                Rectangle()
+                    .frame(width: 5)
+                    .opacity(0)
+                
                 Text(week)
                     .foregroundStyle(.black)
                     .font(.system(size: 10))
-                    .frame(maxHeight: .infinity)
                 WeekView(week: week)
-                    .frame(maxHeight: .infinity)
+                Spacer()
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .border(Color.red, width: 1)
+            .frame(maxHeight: .infinity)
+            .frame(maxWidth: .infinity)
+//            .border(Color.white, width: 3)
+            .background(Color.green.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .cornerRadius(10) // Rundade hörn för hela HStack
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                )
         }
     }
     
@@ -83,10 +103,18 @@ struct GridView: View {
         ForEach (0..<(months.count / 2), id: \.self) { month in
             VStack{
                 Text((months[month]))
+                    .font(.system(size: 10))
                 MonthView()
             }
+            .frame(maxHeight: .infinity)
             .padding(8)
-            .border(Color.red, width: 1)
+//            .border(Color.white, width: 3)
+            .background(Color.yellow.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .cornerRadius(15) // Rundade hörn för hela HStack
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                )
         }
     }
     
@@ -94,10 +122,18 @@ struct GridView: View {
         ForEach (6..<(months.count), id: \.self) { month in
             VStack{
                 Text((months[month]))
+                    .font(.system(size: 10))
                 MonthView()
             }
+            .frame(maxHeight: .infinity)
             .padding(8)
-            .border(Color.red, width: 1)
+//            .border(Color.white, width: 3)
+            .background(Color.yellow.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .cornerRadius(15) // Rundade hörn för hela HStack
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                )
         }
     }
     
@@ -105,10 +141,17 @@ struct GridView: View {
         ForEach (0..<(months.count / 4), id: \.self) { month in
             VStack{
                 Text((months[month]))
+                    .font(.system(size: 12))
                 MonthView()
             }
+            .frame(maxHeight: .infinity)
             .padding(8)
-            .border(Color.red, width: 1)
+            .background(Color.pink.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .cornerRadius(20) // Rundade hörn för hela HStack
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                )
         }
     }
     
@@ -116,10 +159,17 @@ struct GridView: View {
         ForEach (9..<(months.count), id: \.self) { month in
             VStack{
                 Text((months[month]))
+                    .font(.system(size: 12))
                 MonthView()
             }
+            .frame(maxHeight: .infinity)
             .padding(8)
-            .border(Color.red, width: 1)
+            .background(Color.purple.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .cornerRadius(25) // Rundade hörn för hela HStack
+            .overlay(
+                RoundedRectangle(cornerRadius: 25)
+                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                )
         }
     }
     
