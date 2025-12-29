@@ -21,11 +21,11 @@ struct WeekView: View {
 //                    .foregroundStyle(Color.gray)
 //                    .font(.system(size: 10))
                 Text("\(weekTasks[weekTask])")
-                    .foregroundStyle(Color.gray)
+                    .foregroundStyle(Color.white.opacity(0.9))
                     .font(.system(size: 10))
                 if (weekTasks.count > 1) {
                     Text("...")
-                        .foregroundStyle(Color.gray)
+                        .foregroundStyle(Color.white.opacity(0.9))
                         .font(.system(size: 10))
                 }
             }

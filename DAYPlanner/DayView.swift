@@ -16,12 +16,15 @@ struct DayView: View {
     var body: some View {
         HStack(spacing: 0){
                 ForEach (0..<min(1, dayTasks.count), id: \.self) { dayTask in
-                    Text("\(weekday) \(dayTasks[dayTask]) ")
-                        .foregroundStyle(Color.black)
+                    //                Text("\(dayTask):")
+                    //                    .foregroundStyle(Color.gray)
+                    //                    .font(.system(size: 10))
+                                    Text("\(dayTasks[dayTask])")
+                        .foregroundStyle(Color.white.opacity(0.9))
                         .font(.system(size: 10))
                     if (dayTask == min(1, dayTasks.count) - 1 && dayTasks.count > 3) {
                         Text("...")
-                            .foregroundStyle(Color.black)
+                            .foregroundStyle(Color.white.opacity(0.9))
                             .font(.system(size: 10))
                     }
                     

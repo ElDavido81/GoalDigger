@@ -18,7 +18,7 @@ struct QuarterView: View {
             ForEach (quarterTasks.prefix(3), id: \.self) { task in
                 Text("\(task)")
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundStyle(Color.gray)
+                    .foregroundStyle(Color.white.opacity(0.9))
                     .font(.system(size: 10))
             }
         }

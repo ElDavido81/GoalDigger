@@ -22,7 +22,11 @@ let nextweeks: [String] = [
 ]
 
 let quarters: [String] = [
-    "1 MONTH", " 3 MONTHS", "6 MONTHS"
+    "1 month", "3 months", "6 months"
+]
+
+let years: [String] = [
+    "2026", "2027", "2028"
 ]
 
 struct GridView: View {
@@ -38,8 +42,12 @@ struct GridView: View {
                     .opacity(0)
                 
                 Text(index)
-                    .foregroundStyle(.black)
-                    .font(.system(size: 10))
+                    .foregroundStyle(.white.opacity(0.4))
+                    .font(.system(size: 14))
+                    .fontWeight(.heavy)
+                Rectangle()
+                    .frame(width: 5)
+                    .opacity(0)
                 DayView(weekday: index)
                 Spacer()
             }
@@ -49,7 +57,7 @@ struct GridView: View {
             .cornerRadius(5) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
                 )
             
             .onTapGesture {
@@ -85,20 +93,23 @@ struct GridView: View {
                     .frame(width: 5)
                     .opacity(0)
                 
-                Text(week)
-                    .foregroundStyle(.black)
-                    .font(.system(size: 10))
+                Text(week)                    .foregroundStyle(.white.opacity(0.4))
+                    .font(.system(size: 14))
+                    .fontWeight(.heavy)
+                Rectangle()
+                    .frame(width: 5)
+                    .opacity(0)
                 WeekView(week: week)
                 Spacer()
             }
             .frame(maxHeight: .infinity)
             .frame(maxWidth: .infinity)
 //            .border(Color.white, width: 3)
-            .background(Color.green.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .background(Color.green.opacity(0.15)) // Lägg till bakgrundsfärg här
             .cornerRadius(10) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
                 )
         }
     }
@@ -107,7 +118,9 @@ struct GridView: View {
         ForEach (0..<(months.count / 2), id: \.self) { month in
             VStack{
                 Text((months[month]))
-                    .font(.system(size: 10))
+                    .foregroundStyle(.white.opacity(0.4))
+                    .font(.system(size: 14))
+                    .fontWeight(.heavy)
                 MonthView()
             }
             .frame(maxHeight: .infinity, alignment: .top)
@@ -117,7 +130,7 @@ struct GridView: View {
             .cornerRadius(15) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
                 )
         }
     }
@@ -126,7 +139,9 @@ struct GridView: View {
         ForEach (6..<(months.count), id: \.self) { month in
             VStack{
                 Text((months[month]))
-                    .font(.system(size: 10))
+                    .foregroundStyle(.white.opacity(0.4))
+                    .font(.system(size: 14))
+                    .fontWeight(.heavy)
                 MonthView()
             }
             .frame(maxHeight: .infinity, alignment: .top)
@@ -136,7 +151,7 @@ struct GridView: View {
             .cornerRadius(15) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
                 )
         }
     }
@@ -145,76 +160,73 @@ struct GridView: View {
         ForEach (0..<(quarters.count), id: \.self) { index in
             VStack{
                 Text((quarters[index]))
-                    .font(.system(size: 10))
+                    .foregroundStyle(.white.opacity(0.4))
+                    .font(.system(size: 14))
+                    .fontWeight(.heavy)
                 QuarterView()
             }
             .frame(maxHeight: .infinity, alignment: .top)
-            .padding(8)
-            .background(Color.pink.opacity(0.15)) // Lägg till bakgrundsfärg här
+            .padding(.leading, 12)
+            .padding(.top, 8)
+            .padding(.bottom, 8)            .background(Color.pink.opacity(0.15)) // Lägg till bakgrundsfärg här
             .cornerRadius(20) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
                 )
         }
     }
     
     func showYears() -> some View {
-        ForEach (9..<(months.count), id: \.self) { month in
+        ForEach (0..<(years.count), id: \.self) { year in
             VStack{
-                Text((months[month]))
-                    .font(.system(size: 10))
-                MonthView()
+                Text((years[year]))
+                    .font(.system(size: 16))
+                    .fontWeight(.heavy)
+                    .foregroundStyle(Color.white.opacity(0.4))
+                    .shadow(radius: 8)
+                YearView()
             }
             .frame(maxHeight: .infinity, alignment: .top)
-            .padding(.leading, 12)
-            .padding(.top, 8)
-            .background(Color.purple.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .padding(.leading, 15)
+            .padding(.top, 5)
+            .padding(.bottom, 8)
+            .background(Color.purple.opacity(0.15)) // Lägg till bakgrundsfärg här
             .cornerRadius(30) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 30)
-                    .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
                 )
         }
     }
     
     
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 4) {
 
-            // DAYS + WEEKS
-            VStack(spacing: 0) {
+            VStack(spacing: 4) {
                 showWeekdays()
                 showNextWeeks()
             }
-            .frame(width: 150)
+            .frame(width: 160)
 
-
-            // HÖGER DEL
-            VStack(spacing: 0) {
-
-                // MONTHS (2 rader × 6 kolumner) ----- IMPROVE!!
-                    HStack(spacing: 0) {
-                        showFirstMonths()
+            VStack(spacing: 4) {
+                HStack(spacing: 4) {
+                    showFirstMonths()
                     }
-                HStack(spacing: 0){
+                HStack(spacing: 4){
                     showSecondMonths()
                 }
-
-                // 3-6 MONTHS + YEAR (1 rad × 3 kolumner)
-                HStack(spacing: 0) {
+                HStack(spacing: 4) {
                     showQuarters()
-
                 }
-
-                // 1 - 3 YEARS (1 rad × 3 kolumner)
-                HStack(spacing: 0) {
+                HStack(spacing: 4) {
                     showYears()
-
                 }
             }
         }
         .padding()
+        .background(Color.black.opacity(0.9))
     }
 }
 
