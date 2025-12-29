@@ -9,8 +9,8 @@ import SwiftUI
 
 
 let months = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "jan", "feb", "mar", "apr", "may", "jun",
+    "jul", "aug", "sep", "oct", "nov", "dec"
 ]
 
 let weekdays = [
@@ -19,6 +19,10 @@ let weekdays = [
 
 let nextweeks: [String] = [
     "1W", "2W", "3W"
+]
+
+let quarters: [String] = [
+    "1 MONTH", " 3 MONTHS", "6 MONTHS"
 ]
 
 struct GridView: View {
@@ -106,10 +110,10 @@ struct GridView: View {
                     .font(.system(size: 10))
                 MonthView()
             }
-            .frame(maxHeight: .infinity)
+            .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)
 //            .border(Color.white, width: 3)
-            .background(Color.yellow.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .background(Color.yellow.opacity(0.15)) // Lägg till bakgrundsfärg här
             .cornerRadius(15) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
@@ -125,10 +129,10 @@ struct GridView: View {
                     .font(.system(size: 10))
                 MonthView()
             }
-            .frame(maxHeight: .infinity)
+            .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)
 //            .border(Color.white, width: 3)
-            .background(Color.yellow.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .background(Color.yellow.opacity(0.15)) // Lägg till bakgrundsfärg här
             .cornerRadius(15) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
@@ -138,15 +142,15 @@ struct GridView: View {
     }
     
     func showQuarters() -> some View {
-        ForEach (0..<(months.count / 4), id: \.self) { month in
+        ForEach (0..<(quarters.count), id: \.self) { index in
             VStack{
-                Text((months[month]))
-                    .font(.system(size: 12))
-                MonthView()
+                Text((quarters[index]))
+                    .font(.system(size: 10))
+                QuarterView()
             }
-            .frame(maxHeight: .infinity)
+            .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)
-            .background(Color.pink.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .background(Color.pink.opacity(0.15)) // Lägg till bakgrundsfärg här
             .cornerRadius(20) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
@@ -159,15 +163,16 @@ struct GridView: View {
         ForEach (9..<(months.count), id: \.self) { month in
             VStack{
                 Text((months[month]))
-                    .font(.system(size: 12))
+                    .font(.system(size: 10))
                 MonthView()
             }
-            .frame(maxHeight: .infinity)
-            .padding(8)
+            .frame(maxHeight: .infinity, alignment: .top)
+            .padding(.leading, 12)
+            .padding(.top, 8)
             .background(Color.purple.opacity(0.2)) // Lägg till bakgrundsfärg här
-            .cornerRadius(25) // Rundade hörn för hela HStack
+            .cornerRadius(30) // Rundade hörn för hela HStack
             .overlay(
-                RoundedRectangle(cornerRadius: 25)
+                RoundedRectangle(cornerRadius: 30)
                     .stroke(Color.white, lineWidth: 3) // Ramen med rundade hörn
                 )
         }
@@ -182,7 +187,7 @@ struct GridView: View {
                 showWeekdays()
                 showNextWeeks()
             }
-            .frame(width: 120)
+            .frame(width: 150)
 
 
             // HÖGER DEL

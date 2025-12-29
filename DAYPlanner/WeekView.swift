@@ -17,10 +17,12 @@ struct WeekView: View {
     var body: some View {
         HStack(spacing: 2){
             ForEach (0..<min(1, weekTasks.count), id: \.self) { weekTask in
-                Text("\(week): \(weekTasks[weekTask])")
+//                Text("\(week):")
+//                    .foregroundStyle(Color.gray)
+//                    .font(.system(size: 10))
+                Text("\(weekTasks[weekTask])")
                     .foregroundStyle(Color.gray)
                     .font(.system(size: 10))
-            
                 if (weekTasks.count > 1) {
                     Text("...")
                         .foregroundStyle(Color.gray)
