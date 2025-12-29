@@ -10,21 +10,27 @@ import SwiftUI
 let dayTasks = ["skola", "jobba", "träna", "bygga", "koda", "vila", "jobba"]
 
 struct DayView: View {
+    
+    var weekday: String
+    
     var body: some View {
-            HStack(spacing: 2){
-                ForEach (0..<min(5, dayTasks.count), id: \.self) { monTask in
-                    Text("•")
-                        .padding(2)
+            VStack{
+                ForEach (0..<min(3, dayTasks.count), id: \.self) { dayTask in
+                    HStack{ // bara för att se kopplingen, ta bort sen
+                    Text("\(weekday) \(dayTasks[dayTask])")
                         .foregroundStyle(Color.gray)
-                        .cornerRadius(20)
-                        .border(Color.red, width: 1)
+                        .font(.system(size: 10))
+//                    if (dayTask == min(3, dayTasks.count) - 1 && dayTasks.count > 3) {
+//                        Text("...")
+//                            .foregroundStyle(Color.gray)
+//                            .font(.system(size: 10))
+//                    }
+                    }
                 }
+
             }
-            .padding(2)
-            .border(Color.gray, width: 1)
-        
         }
 }
 #Preview {
-    DayView()
+    DayView(weekday: "")
 }
