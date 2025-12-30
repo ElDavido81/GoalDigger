@@ -48,7 +48,7 @@ struct GridView: View {
                 Rectangle()
                     .frame(width: 5)
                     .opacity(0)
-                DayView(weekday: index)
+                DayView(taskData: TaskData())
                 Spacer()
             }
             .frame(maxHeight: .infinity)
