@@ -15,6 +15,8 @@ struct TaskView: View {
     var body: some View {
         
         Text(task.title)
+            .foregroundStyle(Color.white.opacity(0.9))
+            .font(.system(size: 10))
 //        Text(String(task.taskValue))
         
     }
