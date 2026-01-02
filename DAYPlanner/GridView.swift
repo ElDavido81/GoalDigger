@@ -29,8 +29,10 @@ let years: [String] = [
     "2026", "2027", "2028"
 ]
 
+
 struct GridView: View {
     
+    @State var blurGridLayer: Bool = false
     @State private var fullView = false
     
     func showWeekdays() -> some View {
@@ -200,20 +202,51 @@ struct GridView: View {
         }
     }
     
+    func addTaskButton() -> some View {
+        
+        HStack{
+        VStack{
+            Spacer()
+            ZStack{
+                Rectangle()
+                    .fill(.blue)
+                    .opacity(0.7)
+                    .cornerRadius(10)
+                    .frame(width: 35, height: 35)
+                    .onTapGesture {
+                        blurGridLayer.toggle()
+                    }
+                
+                Text("+")
+                    .foregroundStyle(Color.white)
+                    .opacity(0.8)
+                    .fontWeight(.heavy)
+                    .font(.system(size: 20 ))
+                    .baselineOffset(4)
+                    }
+        }
+            Spacer()
+        }
+    }
+    
+    
     
     var body: some View {
+        ZStack{
+        
         HStack(spacing: 4) {
-
+            Spacer(minLength: 40)
+            
             VStack(spacing: 4) {
                 showWeekdays()
                 showNextWeeks()
             }
-            .frame(width: 160)
-
+            .frame(width: 150)
+            
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
                     showFirstMonths()
-                    }
+                }
                 HStack(spacing: 4){
                     showSecondMonths()
                 }
@@ -225,6 +258,11 @@ struct GridView: View {
                 }
             }
         }
+        .blur(radius: blurGridLayer ? 20 : 0.0)
+
+            addTaskButton()
+
+    }
         .padding()
         .background(Color.black.opacity(0.9))
     }
