@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct AddTaskButtonView: View {
-    @State private var blurGridLayer: Bool = false
+    @Binding var blurGridLayer: Bool
     
     var body: some View {
-        
-
             
             HStack{
             VStack{
@@ -37,13 +35,9 @@ struct AddTaskButtonView: View {
             }
                 Spacer()
             }
-
-
-
-
     }
 }
 
 #Preview {
-    AddTaskButtonView()
+    AddTaskButtonView(blurGridLayer: .constant(false))
 }

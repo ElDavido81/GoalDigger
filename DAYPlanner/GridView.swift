@@ -32,7 +32,7 @@ let years: [String] = [
 
 struct GridView: View {
     
-    @State var blurGridLayer: Bool = false
+    @Binding var blurGridLayer: Bool
     @State private var fullView = false
     
     func showWeekdays() -> some View {
@@ -260,7 +260,7 @@ struct GridView: View {
         }
         .blur(radius: blurGridLayer ? 20 : 0.0)
 
-            addTaskButton()
+            AddTaskButtonView(blurGridLayer: $blurGridLayer)
 
     }
         .padding()
@@ -270,5 +270,5 @@ struct GridView: View {
 
 
 #Preview {
-    GridView()
+    GridView(blurGridLayer: .constant(false) )
 }
