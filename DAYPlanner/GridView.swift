@@ -202,35 +202,6 @@ struct GridView: View {
         }
     }
     
-    func addTaskButton() -> some View {
-        
-        HStack{
-        VStack{
-            Spacer()
-            ZStack{
-                Rectangle()
-                    .fill(.blue)
-                    .opacity(0.7)
-                    .cornerRadius(10)
-                    .frame(width: 35, height: 35)
-                    .onTapGesture {
-                        blurGridLayer.toggle()
-                    }
-                
-                Text("+")
-                    .foregroundStyle(Color.white)
-                    .opacity(0.8)
-                    .fontWeight(.heavy)
-                    .font(.system(size: 20 ))
-                    .baselineOffset(4)
-                    }
-        }
-            Spacer()
-        }
-    }
-    
-    
-    
     var body: some View {
         ZStack{
         
