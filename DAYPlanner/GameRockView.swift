@@ -23,7 +23,7 @@ struct GameRockView: View {
         Rectangle()
             .cornerRadius(checkRockRadius(stoneValue: value))
             .foregroundStyle(Color.gray)
-            .frame(width: 15, height: 15)
+            .frame(minHeight: 35)
 
     }
 }

@@ -7,24 +7,29 @@
 
 import SwiftUI
 
-let testlista2 = [
+let testlista = [
     5, 0, 5, 10, 0, 5, 0, 5, 10, 5, 0, 10, 0, 10, 5
 ]
 
 struct GameMonthView: View {
         
     var body: some View {
-
-        VStack(spacing: 3){
-            
-            ForEach(testlista2, id: \.self) { index in
+                
+        VStack{            
+            VStack(spacing: 8){
+                ForEach(testlista, id: \.self) { index in
                 GameRockView(value: index)
                 
+                }
             }
+            Spacer(minLength: 5)
+        }
+        .frame(maxHeight: 300, alignment: .bottom)
+
         }
 
     }
-}
+
 
 #Preview {
     GameMonthView()
