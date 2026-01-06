@@ -7,12 +7,14 @@
 
 import SwiftUI
 
+let gemColors: [Color] = [.orange, .blue, .green, .red]
+
 struct GamePointsView: View {
     var body: some View {
 
         HStack(spacing: 0){
-            ForEach (0..<3) {index in
-                GamePointsDetailsView()
+            ForEach (gemColors, id: \.self) {index in
+                GamePointsDetailsView(gemColor: index)
                 Rectangle()
                     .frame(width: 5)
                     .opacity(0)

@@ -7,33 +7,24 @@
 
 import SwiftUI
 
+
 struct GamePointsDetailsView: View {
+    
+    let gemColor: Color
+    
     var body: some View {
-        
             
         HStack{
-                Rectangle()
-                    .cornerRadius(10)
-                    .foregroundStyle(Color.yellow)
-                    .frame(width: 30, height: 30)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 3)
-                        )
-                    .padding(3)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 13)
-                            .stroke(Color.white, lineWidth: 3)
-                    )
-            VStack{
-                Spacer()
-                    Text(" x")
-                    .foregroundStyle(Color.gray)
-                    .fontWeight(.bold)
-                    .font(.system(size: 18))
-                Spacer()
-            }
-            .fixedSize()
+                GemStone(gemColor: gemColor)
+//            VStack{
+//                Spacer()
+//                    Text(" x")
+//                    .foregroundStyle(Color.gray)
+//                    .fontWeight(.bold)
+//                    .font(.system(size: 18))
+//                Spacer()
+//            }
+//            .fixedSize()
                 Text("50")
                     .foregroundStyle(Color.gray)
                     .fontWeight(.bold)
@@ -47,7 +38,7 @@ struct GamePointsDetailsView: View {
         
     }
 
-
-#Preview {
-    GamePointsDetailsView()
-}
+//
+//#Preview {
+//    GamePointsDetailsView()
+//}
