@@ -24,7 +24,7 @@ struct GemStone: View {
                 )
                 
             )
-            .frame(width: 30, height: 30)
+            .frame(width: 25, height: 25)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.black, lineWidth: 2)
@@ -41,7 +41,7 @@ struct GemStone: View {
                     endPoint: .topLeading
                 ))
                 .cornerRadius(6)
-                .frame(width: 20, height: 20)
+                .frame(width: 15, height: 15)
                 .offset(x: 8, y: 8)
         }
      

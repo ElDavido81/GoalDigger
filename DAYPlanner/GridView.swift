@@ -128,7 +128,7 @@ struct GridView: View {
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)
 //            .border(Color.white, width: 3)
-            .background(Color.yellow.opacity(0.15)) // Lägg till bakgrundsfärg här
+            .background(Color.purple.opacity(0.15)) // Lägg till bakgrundsfärg här
             .cornerRadius(15) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
@@ -149,7 +149,7 @@ struct GridView: View {
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)
 //            .border(Color.white, width: 3)
-            .background(Color.yellow.opacity(0.15)) // Lägg till bakgrundsfärg här
+            .background(Color.purple.opacity(0.15)) // Lägg till bakgrundsfärg här
             .cornerRadius(15) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
@@ -193,7 +193,7 @@ struct GridView: View {
             .padding(.leading, 15)
             .padding(.top, 5)
             .padding(.bottom, 8)
-            .background(Color.purple.opacity(0.15)) // Lägg till bakgrundsfärg här
+            .background(Color.orange.opacity(0.15)) // Lägg till bakgrundsfärg här
             .cornerRadius(30) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 30)
@@ -203,11 +203,10 @@ struct GridView: View {
     }
     
     var body: some View {
-        ZStack{
-        
-        HStack(spacing: 4) {
-            Spacer(minLength: 40)
-            
+        HStack{
+            MenuView(blurGridLayer: $blurGridLayer)
+
+        HStack(spacing: 4) {            
             VStack(spacing: 4) {
                 showWeekdays()
                 showNextWeeks()
@@ -230,8 +229,7 @@ struct GridView: View {
             }
         }
         .blur(radius: blurGridLayer ? 20 : 0.0)
-
-            AddTaskButtonView(blurGridLayer: $blurGridLayer)
+            
 
     }
         .padding()

@@ -16,19 +16,16 @@ struct GamePointsDetailsView: View {
             
         HStack{
                 GemStone(gemColor: gemColor)
-//            VStack{
-//                Spacer()
-//                    Text(" x")
-//                    .foregroundStyle(Color.gray)
-//                    .fontWeight(.bold)
-//                    .font(.system(size: 18))
-//                Spacer()
-//            }
-//            .fixedSize()
+            VStack{
                 Text("50")
-                    .foregroundStyle(Color.gray)
+                    .foregroundStyle(Color.white)
                     .fontWeight(.bold)
-                    .font(.system(size: 25))
+                    .font(.system(size: 20))
+                Text("x100")
+                    .foregroundStyle(Color.white)
+                    .font(.system(size: 12))
+            }
+
             }
         .frame(maxHeight: 30, alignment: .leading)
             .padding(10)

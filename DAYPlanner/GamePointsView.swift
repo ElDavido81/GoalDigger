@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-let gemColors: [Color] = [.orange, .blue, .green, .red]
+let gemColors: [Color] = [.blue, .green, .purple, .pink, .orange]
 
 struct GamePointsView: View {
     var body: some View {
@@ -22,8 +22,8 @@ struct GamePointsView: View {
             Spacer()
             Text("250000")
                 .foregroundStyle(Color.gray)
-                .fontWeight(.regular)
-                .font(.system(size: 25))
+                .fontWeight(.bold)
+                .font(.system(size: 35))
             Rectangle()
                 .frame(width: 5)
                 .opacity(0)

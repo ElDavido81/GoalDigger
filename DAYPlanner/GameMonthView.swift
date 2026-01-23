@@ -24,7 +24,7 @@ struct GameMonthView: View {
             }
             Spacer(minLength: 5)
         }
-        .frame(maxHeight: 300, alignment: .bottom)
+        .frame(maxHeight: 250, alignment: .bottom)
 
         }
 

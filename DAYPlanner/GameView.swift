@@ -8,49 +8,64 @@
 import SwiftUI
 
 struct GameView: View {
-    var body: some View {
+    
+    @Binding var blurGridLayer: Bool
 
-        HStack(spacing: 5){
-            Rectangle()
-                .foregroundStyle(Color.gray)
-                .frame(width: 200, height: 500)
+    var body: some View {
+        
+        HStack{
+MenuView(blurGridLayer: $blurGridLayer)
             
-        VStack{
-            
-            HStack {
-                ForEach(months, id: \.self) {month in
-                    VStack{
-                        GameMonthView()
-                        
-                        let month = month
-                        let monthCaps = month.uppercased()
-                        let monthLetter = monthCaps.prefix(1)
-                        
-                        Text("\(monthLetter)")
-                            .padding(12)
-                            .frame(maxWidth: .infinity)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.blue)
-                            .background(Color.gray.opacity(0.5))
-                            .opacity(0.3)
+            VStack{
+                
+            HStack(){
+                Rectangle()
+                    .foregroundStyle(Color.gray)
+                    .frame(width: 80, height: 200)
+                
+                VStack{
+                    HStack {
+                        ForEach(months, id: \.self) {month in
+                            VStack{
+                                GameMonthView()
+                                
+                                let month = month
+                                let monthCaps = month.uppercased()
+                                let monthLetter = monthCaps.prefix(1)
+                                
+                                Text("\(monthLetter)")
+                                    .padding(12)
+                                    .frame(maxWidth: .infinity)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(Color.gray)
+                                    .background(Color.gray.opacity(0.8))
+                                    .opacity(0.3)
+                            }
+                        }
                     }
-                    Spacer()
+                    .frame(maxWidth: .infinity)
 
                 }
+                .padding(.vertical)
+                
+                Spacer()
             }
-            .frame(maxWidth: .infinity)
                 GamePointsView()
-                .frame(maxWidth: .infinity)
-            Spacer(minLength: 40)
+                    .frame(maxWidth: .infinity)
         }
             
-        .padding(.vertical)
+            LadderView()
+            
+            
         }
         .background(Color.black.opacity(0.9))
+
+
+
 
     }
 }
 
 #Preview {
-    GameView()
+    GameView(blurGridLayer: .constant(false))
 }
