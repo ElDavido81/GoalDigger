@@ -205,6 +205,7 @@ struct GridView: View {
     var body: some View {
         HStack{
             MenuView(blurGridLayer: $blurGridLayer)
+                .frame(width: 60)
 
         HStack(spacing: 4) {            
             VStack(spacing: 4) {

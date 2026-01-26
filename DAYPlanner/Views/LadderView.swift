@@ -50,7 +50,7 @@ struct LadderView: View {
                         .frame(width: 40, height: 60)
                         .foregroundStyle(
                             LinearGradient(
-                                gradient: Gradient(colors: [.black.opacity(0.8), .clear]),
+                                gradient: Gradient(colors: [Color(hex: "1c1c1c"), .clear]),
                                 startPoint: .bottom,
                                 endPoint: .top
                             ))

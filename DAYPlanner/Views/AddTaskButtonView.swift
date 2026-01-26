@@ -12,15 +12,12 @@ struct AddTaskButtonView: View {
     
     var body: some View {
             
-//            HStack{
-//            VStack{
-//                Spacer()
                 ZStack{
                     Rectangle()
                         .fill(.blue)
                         .opacity(0.7)
                         .cornerRadius(10)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 45, height: 45)
                         .onTapGesture {
                             blurGridLayer.toggle()
                         }
@@ -33,9 +30,6 @@ struct AddTaskButtonView: View {
                         .baselineOffset(4)
                         }
             }
-//                Spacer()
-//            }
-//    }
 }
 
 #Preview {

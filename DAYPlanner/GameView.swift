@@ -15,6 +15,7 @@ struct GameView: View {
         
         HStack{
 MenuView(blurGridLayer: $blurGridLayer)
+                .frame(width: 50)
             
             VStack{
                 

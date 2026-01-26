@@ -12,10 +12,10 @@ struct MenuView: View {
     @Binding var blurGridLayer: Bool
 
     var body: some View {
-        VStack {
-            
+        VStack(spacing: 0) {
+            Spacer()
             LiquidView()
-            LiquidView()
+            Spacer()
             AddTaskButtonView(blurGridLayer: $blurGridLayer)
         }
         
