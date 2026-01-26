@@ -10,60 +10,67 @@ import SwiftUI
 struct GameView: View {
     
     @Binding var blurGridLayer: Bool
-
+    
+    @State private var hackAngle: Angle = Angle(degrees: -15)
+    
+    
     var body: some View {
         
-        HStack{
-MenuView(blurGridLayer: $blurGridLayer)
-                .frame(width: 50)
-            
-            VStack{
+        
+        VStack{
+            HStack {
+                LiquidView()
+                    .frame(width: 50)
+Rectangle()
+                    .fill(.clear)
+                    .frame(width: 5)
                 
-            HStack(){
-                Rectangle()
-                    .foregroundStyle(Color.gray)
-                    .frame(width: 80, height: 200)
-                
-                VStack{
-                    HStack {
-                        ForEach(months, id: \.self) {month in
-                            VStack{
-                                GameMonthView()
-                                
-                                let month = month
-                                let monthCaps = month.uppercased()
-                                let monthLetter = monthCaps.prefix(1)
-                                
-                                Text("\(monthLetter)")
-                                    .padding(12)
-                                    .frame(maxWidth: .infinity)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(Color.gray)
-                                    .background(Color.gray.opacity(0.8))
-                                    .opacity(0.3)
+                VStack(spacing: 0){
+                    Spacer()
+                    HackView()
+                        .frame(width: 50, height: 100)
+                        .onTapGesture {
+                            hackAngle = Angle(degrees: 15)
+                            DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+                                hackAngle = Angle(degrees: -15)
                             }
                         }
-                    }
-                    .frame(maxWidth: .infinity)
-
+                        .rotationEffect(hackAngle)
+                    
                 }
-                .padding(.vertical)
                 
-                Spacer()
+                ForEach(months, id: \.self) {month in
+                    VStack{
+                        GameMonthView()
+                        
+                        let month = month
+                        let monthCaps = month.uppercased()
+                        let monthLetter = monthCaps.prefix(1)
+                        
+                        Text("\(monthLetter)")
+                            .padding(12)
+                            .frame(maxWidth: .infinity)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.gray)
+                            .background(Color.gray.opacity(0.8))
+                            .opacity(0.3)
+                    }
+                }
+                LadderView()
             }
-                GamePointsView()
-                    .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity)
+            
+            GamePointsView(blurGridLayer: $blurGridLayer)
+                .frame(maxWidth: .infinity)
         }
-            
-            LadderView()
-            
-            
-        }
+        .padding(.vertical)
+        
+        
         .background(Color.black.opacity(0.9))
-
-
-
-
+        
+        
+        
+        
     }
 }
 

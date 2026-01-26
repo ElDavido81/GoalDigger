@@ -10,7 +10,7 @@ import SwiftUI
 struct LiquidView: View {
     var body: some View {
         
-        GeometryReader { geometry in
+//        GeometryReader { geometry in
             ZStack{
                 
                 
@@ -18,7 +18,7 @@ struct LiquidView: View {
                 ZStack{
                     Rectangle()
                         .fill(Color(hex:"c7c7c7"))
-                        .clipShape(RoundedCorners(radius: 22, corners: [.bottomLeft, .bottomRight])) .clipShape(RoundedCorners(radius: 2, corners: [.topLeft, .topRight]))
+                        .clipShape(RoundedCorners(radius: 22, corners: [.bottomLeft, .bottomRight])) .clipShape(RoundedCorners(radius: 5, corners: [.topLeft, .topRight]))
                         .frame(width: 40, height: .infinity)
                     
                     VStack{
@@ -36,13 +36,14 @@ struct LiquidView: View {
                 
                 VStack{
                     Spacer()
-                        .frame(height: geometry.size.height * 0.2)
+                        .frame(height: 100)
+//                        .frame(height: geometry.size.height * 0.2)
                     
                     ZStack{
                         VStack{
                             Spacer()
                             Rectangle()
-                                .fill(.blue)
+                                .fill(Color(hex: "3a9ff2"))
                                 .clipShape(RoundedCorners(radius: 22, corners: [.bottomLeft, .bottomRight]))
                                 .frame(width: 28, height: .infinity)
                             Spacer()
@@ -51,7 +52,7 @@ struct LiquidView: View {
                         VStack{
                             
                             Ellipse()
-                                .fill(.blue)
+                                .fill(Color(hex: "3a9ff2"))
                                 .frame(width: 28, height: 12)
                                 .overlay(
                                     Ellipse()
@@ -61,12 +62,31 @@ struct LiquidView: View {
                         }
                     }
                 }
-                
+                VStack(spacing:0){
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(height: 150)
+                    HStack(spacing: 0){
+                        Rectangle()
+                            .fill(.clear)
+                            .frame(width: 20)
+                        Rectangle()
+                            .fill(.white).opacity(0.2)
+                            .frame(width: 8, height: .infinity)
+                            .cornerRadius(20)
+                        Rectangle()
+                            .fill(.clear)
+                            .frame(width: 12)
+                    }
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(height: 15)
+                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+//            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
             
-        }
+//        }
         
     }
 }

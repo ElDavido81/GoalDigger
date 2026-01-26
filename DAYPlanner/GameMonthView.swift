@@ -16,13 +16,13 @@ struct GameMonthView: View {
     var body: some View {
                 
         VStack{            
-            VStack(spacing: 8){
+            VStack(spacing: 0){
                 ForEach(testlista, id: \.self) { index in
+                    Spacer(minLength: 8)
                 GameRockView(value: index)
-                
+//                    GemStone(value: index)
                 }
             }
-            Spacer(minLength: 5)
         }
         .frame(maxHeight: 250, alignment: .bottom)
 

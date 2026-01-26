@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GemStone: View {
-    
+
     let gemColor: Color
     var body: some View {
         ZStack(alignment: .topLeading){

@@ -34,7 +34,7 @@ struct LadderView: View {
                 
                 VStack {
                     Spacer(minLength: 5)
-                    ForEach (1...8, id: \.self) {i in
+                    ForEach (1...6, id: \.self) {i in
                         Rectangle()
                             .foregroundStyle(Color(hex: "C2905B"))
                             .frame(width: 40, height: 5)

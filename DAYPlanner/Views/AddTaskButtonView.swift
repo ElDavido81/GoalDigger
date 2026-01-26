@@ -14,19 +14,18 @@ struct AddTaskButtonView: View {
             
                 ZStack{
                     Rectangle()
-                        .fill(.blue)
+                        .fill(Color(hex: "3a9ff2"))
                         .opacity(0.7)
                         .cornerRadius(10)
-                        .frame(width: 45, height: 45)
+                        .frame(width: 50, height: 50)
                         .onTapGesture {
                             blurGridLayer.toggle()
                         }
                     
                     Text("+")
                         .foregroundStyle(Color.white)
-                        .opacity(0.8)
-                        .fontWeight(.heavy)
-                        .font(.system(size: 20 ))
+                        .fontWeight(.bold)
+                        .font(.system(size: 40 ))
                         .baselineOffset(4)
                         }
             }

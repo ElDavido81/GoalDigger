@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct GamePointsDetailsView: View {
-    
+
     let gemColor: Color
     
     var body: some View {

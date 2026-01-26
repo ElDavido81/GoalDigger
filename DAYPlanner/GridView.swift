@@ -44,7 +44,7 @@ struct GridView: View {
                     .opacity(0)
                 
                 Text(index)
-                    .foregroundStyle(.white.opacity(0.4))
+                    .foregroundStyle(.black.opacity(0.3))
                     .font(.system(size: 14))
                     .fontWeight(.heavy)
                 Rectangle()
@@ -55,7 +55,7 @@ struct GridView: View {
             }
             .frame(maxHeight: .infinity)
             .frame(maxWidth: .infinity)
-            .background(Color.blue.opacity(0.2)) // Lägg till bakgrundsfärg här
+            .background(Color(hex:"3a9ff2")) // Lägg till bakgrundsfärg här
             .cornerRadius(5) // Rundade hörn för hela HStack
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
@@ -204,7 +204,7 @@ struct GridView: View {
     
     var body: some View {
         HStack{
-            MenuView(blurGridLayer: $blurGridLayer)
+            LiquidView()
                 .frame(width: 60)
 
         HStack(spacing: 4) {            

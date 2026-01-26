@@ -10,9 +10,16 @@ import SwiftUI
 let gemColors: [Color] = [.blue, .green, .purple, .pink, .orange]
 
 struct GamePointsView: View {
+    
+    @Binding var blurGridLayer: Bool
+
     var body: some View {
 
         HStack(spacing: 0){
+            AddTaskButtonView(blurGridLayer: $blurGridLayer)
+            Rectangle()
+                .frame(width: 10)
+                .opacity(0)
             ForEach (gemColors, id: \.self) {index in
                 GamePointsDetailsView(gemColor: index)
                 Rectangle()
@@ -33,5 +40,5 @@ struct GamePointsView: View {
 }
 
 #Preview {
-    GamePointsView()
+//    GamePointsView()
 }
