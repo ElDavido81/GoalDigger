@@ -12,7 +12,7 @@ class TaskData : ObservableObject {
     
     @Published var tasks = [
         
-        Task(id: 1, title: "Städa", createdAt: "2025-01-30", doneDate: "2025-01-31", taskValue: 10, content: "Hela huset", complete: false),
+        Task(id: 1, title: "AStäda", createdAt: "2025-01-30", doneDate: "2025-01-31", taskValue: 10, content: "Hela huset", complete: false),
         Task(id: 2, title: "Tvätta", createdAt: "2025-01-30", doneDate: "2025-01-31", taskValue: 10, content: "Hela huset", complete: false),
         Task(id: 3, title: "Diska", createdAt: "2025-01-30", doneDate: "2025-01-31", taskValue: 10, content: "Hela huset", complete: false),
         Task(id: 4, title: "Träna", createdAt: "2025-01-30", doneDate: "2025-01-31", taskValue: 10, content: "Hela huset", complete: false),

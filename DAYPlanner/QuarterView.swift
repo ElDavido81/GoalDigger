@@ -8,7 +8,7 @@
 import SwiftUI
 
 let quarterTasks = [
-    "spanska", "milen", "bilen", "hund"
+    "läsa spanska", "springa milen", "sälja bilen", "hund"
 ]
 
 

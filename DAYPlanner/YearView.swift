@@ -8,7 +8,7 @@
 import SwiftUI
 
 let yearTasks = [
-    "månen", "hus", "ledig", "hund"
+    "sommarstuga", "jorden runt", "examen", "hund"
 ]
 
 

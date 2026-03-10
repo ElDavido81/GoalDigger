@@ -8,7 +8,7 @@
 import SwiftUI
 
 let tasks = [
-    "äta", "sova", "bajsa", "dricka"
+    "måla", "flytta", "bilen", "båten"
 ]
 
 

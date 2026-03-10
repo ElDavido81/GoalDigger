@@ -20,6 +20,10 @@ struct GamePointsView: View {
             Rectangle()
                 .frame(width: 10)
                 .opacity(0)
+//            AddTaskButtonView(blurGridLayer: $blurGridLayer)
+//            Rectangle()
+//                .frame(width: 20)
+//                .opacity(0)
             ForEach (gemColors, id: \.self) {index in
                 GamePointsDetailsView(gemColor: index)
                 Rectangle()

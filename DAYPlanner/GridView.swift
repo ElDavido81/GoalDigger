@@ -14,7 +14,7 @@ let months = [
 ]
 
 let weekdays = [
-    "mon", "tue", "wed", "thu", "fri", "sat", "sun"
+    "M ", "T ", "W", "T ", "F ", "S ", "S "
 ]
 
 let nextweeks: [String] = [
