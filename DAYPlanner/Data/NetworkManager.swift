@@ -16,7 +16,9 @@ class NetworkManager {
         request.httpMethod = "GET"
         
         // Lägg till din autentiseringsheader här
-        request.setValue("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjluNHVtdSIsInVzZXJuYW1lIjoidGVzdFVzZXIzIiwiaWF0IjoxNzczMTI5MzU5LCJleHAiOjE3NzMxMzI5NTl9.dOmfqW2k4WxXtZY-sqIgg5i7Cq2HZHeOpeMnKf0QjOg", forHTTPHeaderField: "Authorization")
+        if let token = TokenManager.shared.bearerToken {
+            request.setValue(token, forHTTPHeaderField: "Authorization")
+        }
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {

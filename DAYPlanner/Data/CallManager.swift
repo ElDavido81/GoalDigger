@@ -3,12 +3,12 @@ import Foundation
 class CallManager {
     var allTasks: [[String: Any]] = []
 
-    private static let getUrl = "https://opi23mmfy7.execute-api.eu-north-1.amazonaws.com/api/tasks"
+    private static let url = "https://opi23mmfy7.execute-api.eu-north-1.amazonaws.com/api/tasks"
 
     init() {}
 
     func getTasks(completion: @escaping () -> Void) {
-        NetworkManager.shared.fetchData(from: CallManager.getUrl) { result in
+        NetworkManager.shared.fetchData(from: CallManager.url) { result in
             switch result {
             case .success(let json):
                 if let items = json["Items"] as? [[String: Any]] {
@@ -39,19 +39,45 @@ class CallManager {
         }
     }
     
-    func postTask(from urlString: String, completion: @escaping (Result<[String: Any], Error>) -> Void) {
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL")
-            return
-        }
+    func postTask(taskTitle: String, taskText: String, goalDate: String, taskValue: Int, taskStatus: Bool, completion: @escaping (Result<[String: Any], Error>) -> Void){
+            guard let url = URL(string: "https://opi23mmfy7.execute-api.eu-north-1.amazonaws.com/api/tasks") else {
+                print("Invalid URL")
+                return
+            }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
-        // Lägg till din autentiseringsheader här
         if let token = TokenManager.shared.bearerToken {
             request.setValue(token, forHTTPHeaderField: "Authorization")
         }
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
+        
+        let postData: [String: Any] = [
+                "taskTitle": taskTitle,
+                "taskText": taskText,
+                "goalDate": goalDate,
+                "taskValue": taskValue,
+                "taskStatus": taskStatus
+            ]
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: postData, options: [])
+            request.httpBody = jsonData
+            
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print("JSON som skickas: \(jsonString)")
+                }
+            
+            
+        } catch {
+            completion(.failure(error))
+            return
+        }
+
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))

@@ -18,13 +18,13 @@ struct SignInView: View {
     
     var body: some View {
         
+        NavigationStack {
         VStack{
             Text("Sign in")
             TextField("E-mail", text: $email)
                 .autocapitalization(.none)
             SecureField("Password", text: $password)
             
-            NavigationStack {
                 Button(action: {
                     authManager.signIn(username: email, password: password, completion: { result in
                         switch result {
@@ -49,11 +49,14 @@ struct SignInView: View {
                     Text("Let's goal!")
                 }
                    .navigationDestination(isPresented: $navigateStatus) {
-                       GameView(blurGridLayer: $blurGridLayer)
+//                       GridView(blurGridLayer: $blurGridLayer)
+                       StartView()
+                           .navigationBarHidden(true)
+
                    }
                }
         }
-        .padding()
+//        .padding()
         
     }
 }
