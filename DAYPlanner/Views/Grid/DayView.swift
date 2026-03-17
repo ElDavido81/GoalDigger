@@ -7,60 +7,56 @@
 
 import SwiftUI
 
-let dayTasks = ["skola", "jobba", "träna", "bygga", "koda", "vila", "jobba"]
 
 struct DayView: View {
     
-    @ObservedObject var taskData: TaskData
-    
-//    var weekday: String
-    
+    @ObservedObject var tm: TaskManager
     
     var body: some View {
         HStack(spacing: 0){
-//                ForEach (0..<min(1, dayTasks.count), id: \.self) { dayTask in
-//                    //                Text("\(dayTask):")
-//                    //                    .foregroundStyle(Color.gray)
-//                    //                    .font(.system(size: 10))
-//                    
-//                                    Text("\(dayTasks[dayTask])")
-//                        .foregroundStyle(Color.white.opacity(0.9))
-//                        .font(.system(size: 10))
-//                    
-//                    if (dayTask == min(1, dayTasks.count) - 1 && dayTasks.count > 3) {
-//                        Text("...")
-//                            .foregroundStyle(Color.white.opacity(0.9))
-//                            .font(.system(size: 10))
-//                    }
-//                    
-//                }
             
-            ForEach(taskData.tasks.prefix(1)) { task in
-                    //                Text("\(dayTask):")
-                    //                    .foregroundStyle(Color.gray)
-                    //                    .font(.system(size: 10))
+            let todayString: String = {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"  // Anpassa formatet om ditt goalDate är annorlunda
+                return formatter.string(from: Date())
+            }()
+            
+            ForEach(tm.incompleteTasks
+                .filter { $0.goalDate == todayString } // Filtrera bara dagens uppgifter
+                .sorted { $0.createdAt > $1.createdAt }
+                .prefix(1), id: \.id) { task in
                 
                 TaskView(task: task)
-
-                    
-//                Text("\(taskData.tasks[task].title)")
-//                        .foregroundStyle(Color.white.opacity(0.9))
-//                        .font(.system(size: 10))
-                    
-//                if (task == min(1, taskData.tasks.count) - 1 && taskData.tasks.count > 3) {
-//                        Text("...")
-//                            .foregroundStyle(Color.white.opacity(0.9))
-//                            .font(.system(size: 10))
-//                    }
-                    
-                }
-
+                
             }
-            .frame(alignment: .leading)
-            .padding(2)
+                .overlay(
+                    // Visa ProgressView om listan är tom
+                    Group {
+                        if tm.incompleteTasks.isEmpty {
+                            ProgressView()
+                                .scaleEffect(1.5)
+                        }
+                    }
+                )
+            
         }
-}
+        .frame(alignment: .leading)
+        .padding(2)
+        .onAppear{
+//            callManager.getTasksById{
+//                let listOfTasks = callManager.getIncompleteTasks()
+//                DispatchQueue.main.async {
+//                    incompleteTasks = listOfTasks
+//                    }
+//                }
+            
+            
+            
+            }
+        }
+        
+        //#Preview {
+        //    DayView(weekday: "")
+        //}
+    }
 
-//#Preview {
-//    DayView(weekday: "")
-//}

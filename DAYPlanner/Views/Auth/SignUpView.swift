@@ -17,6 +17,8 @@ struct SignUpView: View {
     @State private var lastname: String = ""
     @State private var navigateStatus = false
     @State private var blurGridLayer: Bool = false
+    @ObservedObject var tm: TaskManager
+
 
     
     var body: some View {
@@ -46,7 +48,7 @@ struct SignUpView: View {
                     Text("Let's goal!")
                 }
                    .navigationDestination(isPresented: $navigateStatus) {
-                       GridView(blurGridLayer: $blurGridLayer)
+                       StartView()
                    }
                }
         }
@@ -56,5 +58,5 @@ struct SignUpView: View {
 }
 
 #Preview {
-    SignUpView()
+    SignUpView(tm: TaskManager())
 }

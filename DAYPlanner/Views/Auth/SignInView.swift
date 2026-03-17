@@ -49,6 +49,7 @@ struct SignInView: View {
                     Text("Let's goal!")
                 }
                    .navigationDestination(isPresented: $navigateStatus) {
+
 //                       GridView(blurGridLayer: $blurGridLayer)
                        StartView()
                            .navigationBarHidden(true)
@@ -61,6 +62,6 @@ struct SignInView: View {
     }
 }
 
-#Preview {
-    SignInView()
-}
+//#Preview {
+//    SignInView(tm: TaskManager())
+//}

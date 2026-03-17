@@ -66,6 +66,10 @@ class AuthManager {
             }
         }
         
+        UserDefaults.standard.set(username, forKey: "loggedInUsername")
+        print("\(username)")
+        
+        
         task.resume()
     }
     

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StartView: View {
     
-    private let callManager = CallManager()
+    @EnvironmentObject var callManager: CallManager
 
     @State private var todayTitle: String = ""
     @State private var todayText: String = ""
@@ -26,7 +26,7 @@ struct StartView: View {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         todayDate = dateFormatter.string(from: Date())
 
-        if let threeYearsLater = Calendar.current.date(byAdding: .year, value: 3, to: Date()) {
+        if let threeYearsLater = Calendar.current.date(byAdding: .year, value: 2, to: Date()) {
             threeYearsDate = dateFormatter.string(from: threeYearsLater)
         } else {
             threeYearsDate = ""
@@ -58,11 +58,16 @@ struct StartView: View {
             )
     }
 
+    
 
     var body: some View {
         
         
         VStack{
+            var currentUsername: String {
+                UserDefaults.standard.string(forKey: "loggedInUsername") ?? ""
+            }
+            Text("Hello \(currentUsername)")
             Text("Today I need to...")
             TextField("", text: $todayTitle)
                 .autocapitalization(.none)
@@ -81,6 +86,7 @@ struct StartView: View {
                 }
                    .navigationDestination(isPresented: $navigateStatus) {
                        GridView(blurGridLayer: $blurGridLayer)
+                           .navigationBarHidden(true)
                    }
                }
             }

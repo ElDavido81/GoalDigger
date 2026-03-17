@@ -10,10 +10,10 @@ struct DBTestView: View {
                 .padding()
             
             Button(action: {
-                callManager.getTasks{
-                    let incompleteTitles = callManager.getIncompleteTasks()
-                    responseMessage = incompleteTitles.joined(separator: ", ")
-                }
+//                callManager.getTasksById{
+//                    let incompleteTitles = callManager.getIncompleteTasks()
+//                    responseMessage = incompleteTitles.joined(separator: ", ")
+//                }
             }) {
                 Text("Hämta data")
             }

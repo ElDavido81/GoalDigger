@@ -1,20 +1,31 @@
 import Foundation
 
-class CallManager {
+class CallManager: ObservableObject {
     var allTasks: [[String: Any]] = []
 
     private static let url = "https://opi23mmfy7.execute-api.eu-north-1.amazonaws.com/api/tasks"
 
     init() {}
 
-    func getTasks(completion: @escaping () -> Void) {
+    func getTasksById(completion: @escaping () -> Void) {
         NetworkManager.shared.fetchData(from: CallManager.url) { result in
             switch result {
             case .success(let json):
                 if let items = json["Items"] as? [[String: Any]] {
-                    DispatchQueue.main.async {
-                        self.allTasks = items
-                        print("Alla tasks har hämtats: \(self.allTasks)")
+                    if let currentUserId = UserDefaults.standard.string(forKey: "loggedInUsername") {
+                        let userItems = items.filter { item in
+                            if let userId = item["userId"] as? String {
+                                return userId == currentUserId
+                            }
+                            return false
+                        }
+                        DispatchQueue.main.async {
+                            self.allTasks = userItems
+                            print("Användarens tasks har hämtats: \(self.allTasks)")
+                            completion()
+                        }
+                    } else {
+                        print("Inget användar-ID hittades i UserDefaults.")
                         completion()
                     }
                 } else {
@@ -30,10 +41,17 @@ class CallManager {
         }
     }
 
-    func getIncompleteTasks() -> [String] {
-        return allTasks.compactMap { item -> String? in
-            if let taskTitle = item["taskTitle"] as? String, let taskStatus = item["taskStatus"] as? Bool, !taskStatus {
-                return taskTitle
+    func getIncompleteTasks() -> [Task] {
+        return allTasks.compactMap { item -> Task? in
+            if let id = item["id"] as? String,
+               let taskTitle = item["taskTitle"] as? String,
+               let taskText = item["taskText"] as? String,
+               let createdAt = item["createdAt"] as? String,
+               let goalDate = item["goalDate"] as? String,
+               let taskValue = item["taskValue"] as? Int,
+               let taskStatus = item["taskStatus"] as? Bool,
+                !taskStatus {
+                return Task(id: id, taskTitle: taskTitle, createdAt: createdAt, goalDate: goalDate, taskValue: taskValue, taskText: taskText, taskStatus: taskStatus)
             }
             return nil
         }
@@ -53,8 +71,6 @@ class CallManager {
         }
         
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        
         
         let postData: [String: Any] = [
                 "taskTitle": taskTitle,

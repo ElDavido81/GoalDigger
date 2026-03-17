@@ -35,6 +35,9 @@ struct GridView: View {
     @Binding var blurGridLayer: Bool
     @State private var fullView = false
     
+    @EnvironmentObject var tm: TaskManager
+    @EnvironmentObject var callManager: CallManager
+    
     func showWeekdays() -> some View {
         ForEach(weekdays, id: \.self) { index in
             HStack(spacing: 0) {
@@ -50,7 +53,8 @@ struct GridView: View {
                 Rectangle()
                     .frame(width: 5)
                     .opacity(0)
-                DayView(taskData: TaskData())
+//                DayView(taskData: TaskData())
+                DayView(tm: tm)
                 Spacer()
             }
             .frame(maxHeight: .infinity)
@@ -187,7 +191,7 @@ struct GridView: View {
                     .fontWeight(.heavy)
                     .foregroundStyle(Color.white.opacity(0.4))
                     .shadow(radius: 8)
-                YearView()
+                YearView(tm: tm)
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(.leading, 15)
@@ -235,10 +239,15 @@ struct GridView: View {
     }
         .padding()
         .background(Color.black.opacity(0.9))
+        .task{
+            callManager.getTasksById{
+                tm.incompleteTasks = callManager.getIncompleteTasks()
+            }
+        }
     }
 }
 
 
-#Preview {
-    GridView(blurGridLayer: .constant(false) )
-}
+//#Preview {
+//    GridView(blurGridLayer: .constant(false), tm: TaskManager() )
+//}
