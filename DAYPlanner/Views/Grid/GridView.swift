@@ -38,6 +38,7 @@ struct GridView: View {
     @EnvironmentObject var tm: TaskManager
     @EnvironmentObject var callManager: CallManager
     
+    
     func showWeekdays() -> some View {
         ForEach(weekdays, id: \.self) { index in
             HStack(spacing: 0) {
@@ -121,13 +122,14 @@ struct GridView: View {
     }
     
     func showFirstMonths() -> some View {
+        
         ForEach (0..<(months.count / 2), id: \.self) { month in
             VStack{
                 Text((months[month]))
                     .foregroundStyle(.white.opacity(0.4))
                     .font(.system(size: 14))
                     .fontWeight(.heavy)
-                MonthView()
+                    MonthView(tm: tm, monthNumber: month)
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)
@@ -142,13 +144,16 @@ struct GridView: View {
     }
     
     func showSecondMonths() -> some View {
+//        let currentMonth = Calendar.current.component(.month, from: Date())
+//        let nextMonth = (currentMonth % 12) + 1
+        
         ForEach (6..<(months.count), id: \.self) { month in
             VStack{
                 Text((months[month]))
                     .foregroundStyle(.white.opacity(0.4))
                     .font(.system(size: 14))
                     .fontWeight(.heavy)
-                MonthView()
+                MonthView(tm: tm, monthNumber: month)
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)

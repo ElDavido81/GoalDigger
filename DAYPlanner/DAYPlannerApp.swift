@@ -16,6 +16,7 @@ struct DAYPlannerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+            
                 .environmentObject(callManager)
                 .environmentObject(taskManager)
         }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-let weekTasks = ["workout", "holiday", "project", "bygga", "koda", "vila", "jobba"]
+let weekTasks = [""]
 
 
 struct WeekView: View {

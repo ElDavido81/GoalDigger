@@ -9,8 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     
+    
+    @State private var blurGridLayer: Bool = false
+    
     var body: some View {
-        SignInView()
+//        StartView()
+//        GridView(blurGridLayer: $blurGridLayer)
+        SignUpView()
+//        SignUpView()
+//        GameView(blurGridLayer: $blurGridLayer)
 //        DBTestView()
     }
 

@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-//let yearTasks = [
-//    "sommarstuga", "jorden runt", "examen", "hund"
-//]
-
-
-
 struct YearView: View {
     
     @ObservedObject var tm: TaskManager

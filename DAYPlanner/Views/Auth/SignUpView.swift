@@ -17,46 +17,90 @@ struct SignUpView: View {
     @State private var lastname: String = ""
     @State private var navigateStatus = false
     @State private var blurGridLayer: Bool = false
-    @ObservedObject var tm: TaskManager
+//    @ObservedObject var tm: TaskManager
 
 
     
     var body: some View {
         
-        VStack{
-            Text("Create account")
-            TextField("First name", text: $firstname)
-            TextField("Last name", text: $lastname)
-            TextField("E-mail", text: $email)
-                .autocapitalization(.none)
-            SecureField("Password", text: $password)
-            
-            NavigationStack {
-                Button(action: {
-                    authManager.signUp(username: email, password: password, firstname: firstname, lastname: lastname, completion: { result in
-                        switch result {
-                        case .success:
-                            print("Data skickad!")
-                            navigateStatus = true
-                        case .failure(_):
-                            print("Error: (error.localizedDescription)")
-                        }
+        NavigationStack {
+            ZStack{
+                Color(hex: "333333").ignoresSafeArea()
+                
+                VStack{
+                    Image("logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 300)
+                    Rectangle()
+                        .frame(height: 20)
+                        .hidden()
+//                    TextField("First name", text: $firstname)
+//                        .padding(15)
+//                        .background(Color(hex: "e8e8e8"))
+//                        .font(.system(size: 22))
+//                        .fontWeight(.medium)
+//                        .cornerRadius(50)
+//                    TextField("Last name", text: $lastname)
+//                        .padding(15)
+//                        .background(Color(hex: "e8e8e8"))
+//                        .font(.system(size: 22))
+//                        .fontWeight(.medium)
+//                        .cornerRadius(50)
+                    TextField("E-mail", text: $email)
+                        .padding(15)
+                        .background(Color(hex: "e8e8e8"))
+                        .font(.system(size: 22))
+                        .fontWeight(.medium)
+                        .cornerRadius(50)
+                        .autocapitalization(.none)
+                    SecureField("Password", text: $password)
+                        .padding(15)
+                        .background(Color(hex: "e8e8e8"))
+                        .font(.system(size: 22))
+                        .fontWeight(.medium)
+                        .cornerRadius(50)
+                    Rectangle()
+                        .frame(height: 20)
+                        .hidden()
+                    Button(action: {
+                        authManager.signUp(username: email, password: password, firstname: firstname, lastname: lastname, completion: { result in
+                            switch result {
+                            case .success:
+                                print("Data skickad!")
+                                navigateStatus = true
+                            case .failure(_):
+                                print("Error: (error.localizedDescription)")
+                            }
+                        })
+                        navigateStatus = true
                     })
-                    navigateStatus = true
-                })
-                {
-                    Text("Let's goal!")
+                    {
+                        VStack{
+                            Text("Sign")
+                            Text("up!")
+                        }
+                        .padding(25)
+                        .background(Color(hex: "99CCCC"))
+                        .foregroundColor(Color(hex: "333333"))
+                        .font(.system(size: 22))
+                        .fontWeight(.heavy)
+                        .cornerRadius(150)
+                        
+                    }
+                    Spacer()
+
+                    .navigationDestination(isPresented: $navigateStatus)
+                    {
+                        SignInView()
+                    }
                 }
-                   .navigationDestination(isPresented: $navigateStatus) {
-                       StartView()
-                   }
-               }
+                .padding(40)
+            }
         }
-        .padding()
-        
     }
 }
 
 #Preview {
-    SignUpView(tm: TaskManager())
+    SignUpView()
 }
