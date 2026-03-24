@@ -11,18 +11,41 @@ import SwiftUI
 struct DayView: View {
     
     @ObservedObject var tm: TaskManager
+    let weekday: Int
+    
+    private var todayDate: Date {
+        return Date()
+    }
+    
+    private let formatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        return df
+    }()
+    
+    private var dayDate: Date {
+        let calendar = Calendar.current
+        let today = Date()
+        
+        // Hitta start av veckan (måndag)
+        guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)) else {
+            return today
+        }
+        
+        // Lägg till weekday offset (weekday - 1)
+        return calendar.date(byAdding: .day, value: weekday - 1, to: startOfWeek) ?? today
+    }
     
     var body: some View {
-        HStack(spacing: 0){
-            
-            let today: String = {
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd"
-                return formatter.string(from: Date())
-            }()
-            
+        HStack(spacing: 0){            
             ForEach(tm.incompleteTasks
-                .filter { $0.goalDate == today }
+                .filter
+                    { task in
+                                        guard let goalDate = formatter.date(from: task.goalDate) else { return false }
+                return Calendar.current.isDate(goalDate, inSameDayAs: dayDate)
+
+                                    }
+                
                 .sorted { $0.createdAt > $1.createdAt }
                 .prefix(1), id: \.id) { task in
                 
@@ -33,6 +56,11 @@ struct DayView: View {
         }
         .frame(alignment: .leading)
         .padding(2)
+        .onAppear {
+            print("Today:", formatter.string(from: todayDate))
+            tm.incompleteTasks.forEach { print($0.goalDate) }
+        print(weekday)
+        }
         }
         
         //#Preview {

@@ -40,14 +40,14 @@ struct GridView: View {
     
     
     func showWeekdays() -> some View {
-        ForEach(weekdays, id: \.self) { index in
+        ForEach(weekdays.indices, id: \.self) { index in
             HStack(spacing: 0) {
 
                 Rectangle()
                     .frame(width: 5)
                     .opacity(0)
                 
-                Text(index)
+                Text(weekdays[index])
                     .foregroundStyle(.black.opacity(0.3))
                     .font(.system(size: 14))
                     .fontWeight(.heavy)
@@ -55,7 +55,7 @@ struct GridView: View {
                     .frame(width: 5)
                     .opacity(0)
 //                DayView(taskData: TaskData())
-                DayView(tm: tm)
+                DayView(tm: tm, weekday: index + 1)
                 Spacer()
             }
             .frame(maxHeight: .infinity)
@@ -67,28 +67,28 @@ struct GridView: View {
                     .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
                 )
             
-            .onTapGesture {
-                switch index {
-                case weekdays[0]:
-                    print("monday trycktes")
-                    fullView.toggle()
-                    print(fullView)
-                case weekdays[1]:
-                    print("tues trycktes")
-                case weekdays[2]:
-                    print("wed trycktes")
-                case weekdays[3]:
-                    print("thur trycktes")
-                case weekdays[4]:
-                    print("fri trycktes")
-                case weekdays[5]:
-                    print("sat trycktes")
-                case weekdays[6]:
-                    print("sun trycktes")
-                default:
-                    break
-                }
-                }
+//            .onTapGesture {
+//                switch index {
+//                case weekdays[0]:
+//                    print("monday trycktes")
+//                    fullView.toggle()
+//                    print(fullView)
+//                case weekdays[1]:
+//                    print("tues trycktes")
+//                case weekdays[2]:
+//                    print("wed trycktes")
+//                case weekdays[3]:
+//                    print("thur trycktes")
+//                case weekdays[4]:
+//                    print("fri trycktes")
+//                case weekdays[5]:
+//                    print("sat trycktes")
+//                case weekdays[6]:
+//                    print("sun trycktes")
+//                default:
+//                    break
+//                }
+//                }
             }
         }
     
@@ -129,7 +129,7 @@ struct GridView: View {
                     .foregroundStyle(.white.opacity(0.4))
                     .font(.system(size: 14))
                     .fontWeight(.heavy)
-                    MonthView(tm: tm, monthNumber: month)
+                    MonthView(tm: tm, monthNumber: month + 1)
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)

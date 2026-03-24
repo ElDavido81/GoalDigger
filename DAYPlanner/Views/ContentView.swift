@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
 //        StartView()
 //        GridView(blurGridLayer: $blurGridLayer)
-        SignUpView()
+        SignInView()
 //        SignUpView()
 //        GameView(blurGridLayer: $blurGridLayer)
 //        DBTestView()

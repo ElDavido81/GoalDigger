@@ -18,33 +18,53 @@ struct StartView: View {
     @State private var threeYearsTitle: String = ""
     @State private var threeYearsText: String = ""
     @State private var navigateStatus = false
-    let threeYearsDate: String
-    let todayDate: String
-    let nextMonthDate: String
+    var threeYearsDate: Date?
+    var todayDate = Date()
+    var nextMonthDate: Date?
     
     @State private var blurGridLayer = false
     
-    init() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        todayDate = dateFormatter.string(from: Date())
+//    init() {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        todayDate = dateFormatter.string(from: Date())
         
-        if let threeYearsLater = Calendar.current.date(byAdding: .year, value: 2, to: Date()) {
-            threeYearsDate = dateFormatter.string(from: threeYearsLater)
-        } else {
-            threeYearsDate = ""
-        }
+//        let threeYearsDate = Calendar.current.date(byAdding: .year, value: 2, to: Date())
+//        {
+//            threeYearsDate = dateFormatter.string(from: threeYearsLater)
+//        } else {
+//            threeYearsDate = ""
+//            
+//        }
 
-        if let oneMonthLater = Calendar.current.date(byAdding: .month, value: 1, to: Date()) {
-            nextMonthDate = dateFormatter.string(from: oneMonthLater)
-        } else {
-            nextMonthDate = ""
-        }
+//        let nextMonthDate = Calendar.current.date(byAdding: .month, value: 1, to: Date()) {
+//            nextMonthDate = dateFormatter.string(from: oneMonthLater)
+//        }
+//        else {
+//            nextMonthDate = ""
+//        }
+//    }
+    
+    init() {
+//        todayDate = Date()
+        
+        
+        threeYearsDate = Calendar.current.date(byAdding: .year, value: 2, to: todayDate)
+
+        
+        nextMonthDate = Calendar.current.date(byAdding: .month, value: 1, to: todayDate)
     }
+
     
     
     private func postToday() {
-        callManager.postTask(taskTitle: todayTitle, taskText: todayText, goalDate: todayDate, taskValue: 10, taskStatus: false, completion: { result in
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        let today = dateFormatter.string(from: todayDate)
+
+        callManager.postTask(taskTitle: todayTitle, taskText: todayText, goalDate: today, taskValue: 10, taskStatus: false, completion: { result in
             switch result {
             case .success:
                 print("Data skickad!")
@@ -56,7 +76,15 @@ struct StartView: View {
     }
     
     private func postThreeYear() {
-        callManager.postTask(taskTitle: threeYearsTitle, taskText: threeYearsText, goalDate: threeYearsDate, taskValue: 1000, taskStatus: false, completion: { result in
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        guard let threeYearsLater = threeYearsDate else {
+                   return
+               }
+        let threeYearsLaterS = dateFormatter.string(from: threeYearsLater)
+        
+        callManager.postTask(taskTitle: threeYearsTitle, taskText: threeYearsText, goalDate: threeYearsLaterS, taskValue: 1000, taskStatus: false, completion: { result in
             switch result {
             case .success:
                 print("Data skickad!")
@@ -68,7 +96,15 @@ struct StartView: View {
     }
 
     private func postNextMonth() {
-        callManager.postTask(taskTitle: nextMonthTitle, taskText: nextMonthText, goalDate: nextMonthDate, taskValue: 100, taskStatus: false, completion: { result in
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        guard let oneMonthLater = nextMonthDate else {
+                   return
+               }
+        
+        let oneMonthLaterS = dateFormatter.string(from: oneMonthLater)
+
+        callManager.postTask(taskTitle: nextMonthTitle, taskText: nextMonthText, goalDate: oneMonthLaterS, taskValue: 100, taskStatus: false, completion: { result in
             switch result {
             case .success:
                 print("Data skickad!")
