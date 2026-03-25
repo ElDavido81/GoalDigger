@@ -25,9 +25,13 @@ let quarters: [String] = [
     "1 month", "3 months", "6 months"
 ]
 
-let years: [String] = [
-    "2026", "2027", "2028"
-]
+//let years: [String] = [
+//    "2026", "2027", "2028"
+//]
+let currentYear = Calendar.current.component(.year, from: Date())
+let years: [Int] = (0...2).map {
+    currentYear + $0
+}
 
 
 struct GridView: View {
@@ -54,7 +58,6 @@ struct GridView: View {
                 Rectangle()
                     .frame(width: 5)
                     .opacity(0)
-//                DayView(taskData: TaskData())
                 DayView(tm: tm, weekday: index + 1)
                 Spacer()
             }
@@ -67,28 +70,28 @@ struct GridView: View {
                     .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
                 )
             
-//            .onTapGesture {
-//                switch index {
-//                case weekdays[0]:
-//                    print("monday trycktes")
-//                    fullView.toggle()
-//                    print(fullView)
-//                case weekdays[1]:
-//                    print("tues trycktes")
-//                case weekdays[2]:
-//                    print("wed trycktes")
-//                case weekdays[3]:
-//                    print("thur trycktes")
-//                case weekdays[4]:
-//                    print("fri trycktes")
-//                case weekdays[5]:
-//                    print("sat trycktes")
-//                case weekdays[6]:
-//                    print("sun trycktes")
-//                default:
-//                    break
-//                }
-//                }
+            .onTapGesture {
+                switch index {
+                case 0:
+                    print("monday trycktes")
+                    fullView.toggle()
+                    print(fullView)
+                case 1:
+                    print("tues trycktes")
+                case 2:
+                    print("wed trycktes")
+                case 3:
+                    print("thur trycktes")
+                case 4:
+                    print("fri trycktes")
+                case 5:
+                    print("sat trycktes")
+                case 6:
+                    print("sun trycktes")
+                default:
+                    break
+                }
+                }
             }
         }
     
@@ -189,14 +192,14 @@ struct GridView: View {
     }
     
     func showYears() -> some View {
-        ForEach (0..<(years.count), id: \.self) { year in
+        ForEach (years, id: \.self) { year in
             VStack{
-                Text((years[year]))
+                Text(String(year))
                     .font(.system(size: 16))
                     .fontWeight(.heavy)
                     .foregroundStyle(Color.white.opacity(0.4))
                     .shadow(radius: 8)
-                YearView(tm: tm)
+                YearView(tm: tm, yearNumber: year)
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(.leading, 15)
@@ -212,6 +215,8 @@ struct GridView: View {
     }
     
     var body: some View {
+        
+        
         HStack{
             LiquidView()
                 .frame(width: 60)

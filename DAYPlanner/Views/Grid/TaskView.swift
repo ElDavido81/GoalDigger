@@ -11,17 +11,22 @@ import SwiftUI
 struct TaskView: View {
     
     @ObservedObject var task: Task
+
     
     var body: some View {
+        let screen = UIScreen.main.bounds
+                let isLandscape = screen.width > screen.height
+                let fontSize: CGFloat = isLandscape ? 10 : 24
+
+            
+            Text(task.taskTitle)
+                .foregroundStyle(Color.white.opacity(0.9))
+                .font(.system(size: fontSize))
+            
+        }
         
-        Text(task.taskTitle)
-            .foregroundStyle(Color.white.opacity(0.9))
-            .font(.system(size: 10))
-//        Text(String(task.taskValue))
-        
+        //    #Preview {
+        //        TaskView(task)
+        //    }
     }
-    
-//    #Preview {
-//        TaskView(task)
-//    }
-}
+

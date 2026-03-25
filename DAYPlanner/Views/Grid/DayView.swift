@@ -40,16 +40,15 @@ struct DayView: View {
         HStack(spacing: 0){            
             ForEach(tm.incompleteTasks
                 .filter
-                    { task in
-                                        guard let goalDate = formatter.date(from: task.goalDate) else { return false }
+                { task in
+                guard let goalDate = formatter.date(from: task.goalDate) else { return false }
                 return Calendar.current.isDate(goalDate, inSameDayAs: dayDate)
-
-                                    }
+                }
                 
                 .sorted { $0.createdAt > $1.createdAt }
                 .prefix(1), id: \.id) { task in
                 
-                TaskView(task: task)
+                    TaskView(task: task)
                 
             }
             

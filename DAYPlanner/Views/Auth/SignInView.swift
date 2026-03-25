@@ -88,7 +88,9 @@ struct SignInView: View {
                     .navigationDestination(isPresented: $navigateStatus)
                     {
                         
-                        GridView(blurGridLayer: $blurGridLayer)
+//                        GridView(blurGridLayer: $blurGridLayer)
+//                        WeekdaysView(blurGridLayer: $blurGridLayer)
+                        DynamicView(blurGridLayer: $blurGridLayer)
                             .navigationBarHidden(true)
                     }
                 }

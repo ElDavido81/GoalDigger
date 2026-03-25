@@ -11,39 +11,49 @@ struct YearView: View {
     
     @ObservedObject var tm: TaskManager
     
+    let yearNumber: Int
+    let currentYear = Calendar.current.component(.year, from: Date())
+    
+    let formatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        return df
+    }()
+    private var whatYear: Date {
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.year], from: Date())
+        return calendar.date(from: components) ?? Date()
+        }
+    
     var body: some View {
         VStack(spacing: 2){
             
-            let currentYear = Calendar.current.component(.year, from: Date())
-            let threeYear = currentYear + 2
             
             ForEach (tm.incompleteTasks
                 .filter { task in
-                            guard task.goalDate.count >= 4 else { return false }
-                            return Int(task.goalDate.prefix(4)) == threeYear
-                        }
+                 guard let goalDate = formatter.date(from: task.goalDate) else {return false}
+                 let calendar = Calendar.current
+                 let taskYear = calendar.component(.year, from: goalDate)
+                 return taskYear == yearNumber
+             }
                         .sorted { $0.createdAt > $1.createdAt }
                         .prefix(3),
                      
-                     id: \.taskTitle) { task in
+                     id: \.id) { task in
                 
                 TaskView(task: task)
 
-//                Text("\(task)")
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                    .foregroundStyle(Color.white.opacity(0.9))
-//                    .font(.system(size: 10))
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .onAppear{
-//            callManager.getTasksById{
-//                incompleteTasks = callManager.getIncompleteTasks()
+            print("Året som skickas med är: \(yearNumber)")
+            print("Current year: \(currentYear)")
             }
         }
     }
 
 
-#Preview {
-    YearView(tm: TaskManager())
-}
+//#Preview {
+//    YearView(tm: TaskManager())
+//}
