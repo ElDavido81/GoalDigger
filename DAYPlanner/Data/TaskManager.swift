@@ -9,4 +9,6 @@ import Foundation
 
 class TaskManager: ObservableObject {
     @Published var incompleteTasks: [Task] = []
+    @Published var lazyLiquid: Int = 1
+
 }

@@ -36,7 +36,6 @@ let years: [Int] = (0...2).map {
 
 struct GridView: View {
     
-    @Binding var blurGridLayer: Bool
     @State private var fullView = false
     
     @EnvironmentObject var tm: TaskManager
@@ -58,7 +57,7 @@ struct GridView: View {
                 Rectangle()
                     .frame(width: 5)
                     .opacity(0)
-                DayView(tm: tm, weekday: index + 1)
+                DayView(tm: tm, taskAmount: 1, weekday: index + 1)
                 Spacer()
             }
             .frame(maxHeight: .infinity)
@@ -218,7 +217,7 @@ struct GridView: View {
         
         
         HStack{
-            LiquidView()
+            EdgeView()
                 .frame(width: 60)
 
         HStack(spacing: 4) {            
@@ -243,7 +242,6 @@ struct GridView: View {
                 }
             }
         }
-        .blur(radius: blurGridLayer ? 20 : 0.0)
             
 
     }
@@ -259,5 +257,5 @@ struct GridView: View {
 
 
 //#Preview {
-//    GridView(blurGridLayer: .constant(false), tm: TaskManager() )
+//    GridView(tm: TaskManager() )
 //}

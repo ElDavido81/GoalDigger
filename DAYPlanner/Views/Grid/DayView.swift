@@ -11,6 +11,7 @@ import SwiftUI
 struct DayView: View {
     
     @ObservedObject var tm: TaskManager
+    let taskAmount: Int
     let weekday: Int
     
     private var todayDate: Date {
@@ -37,7 +38,7 @@ struct DayView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0){            
+        VStack(spacing: 0){            
             ForEach(tm.incompleteTasks
                 .filter
                 { task in
@@ -46,14 +47,14 @@ struct DayView: View {
                 }
                 
                 .sorted { $0.createdAt > $1.createdAt }
-                .prefix(1), id: \.id) { task in
+                .prefix(taskAmount), id: \.id) { task in
                 
                     TaskView(task: task)
                 
             }
             
         }
-        .frame(alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(2)
         .onAppear {
             print("Today:", formatter.string(from: todayDate))

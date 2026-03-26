@@ -22,7 +22,6 @@ struct StartView: View {
     var todayDate = Date()
     var nextMonthDate: Date?
     
-    @State private var blurGridLayer = false
     
 //    init() {
 //        let dateFormatter = DateFormatter()
@@ -129,21 +128,30 @@ struct StartView: View {
                 
                 VStack{
                     //            Text("Hello \(currentUsername)")
-                    TextField("Today I need to...", text: $todayTitle)
+                    Text("Today")
+                        .font(.system(size: 22))
+                        .fontWeight(.bold)
+                    TextField("...I need to:", text: $todayTitle)
                         .padding(15)
                         .background(Color.white)
                         .foregroundColor(Color(hex: "333333"))
                         .font(.system(size: 22))
                         .fontWeight(.medium)
                         .cornerRadius(8)
-                    TextField("Next month I want to...", text: $nextMonthTitle)
+                    Text("Next month")
+                        .font(.system(size: 22))
+                        .fontWeight(.bold)
+                    TextField("...I want to:", text: $nextMonthTitle)
                         .padding(15)
                         .background(Color.white)
                         .foregroundColor(Color(hex: "333333"))
                         .font(.system(size: 22))
                         .fontWeight(.medium)
                         .cornerRadius(20)
-                    TextField("In 3 years I will...", text: $threeYearsTitle)
+                    Text("In 3 years")
+                        .font(.system(size: 22))
+                        .fontWeight(.bold)
+                    TextField("...I will:", text: $threeYearsTitle)
                         .padding(15)
                         .background(Color.white)
                         .foregroundColor(Color(hex: "333333"))
@@ -171,7 +179,7 @@ struct StartView: View {
                         .cornerRadius(150)
                     }
                     .navigationDestination(isPresented: $navigateStatus) {
-                        GridView(blurGridLayer: $blurGridLayer)
+                        DynamicView()
                             .navigationBarHidden(true)
                     }
                 }

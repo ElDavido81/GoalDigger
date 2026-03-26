@@ -14,7 +14,6 @@ struct SignInView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var navigateStatus = false
-    @State private var blurGridLayer: Bool = false
     
     var body: some View {
         
@@ -88,9 +87,7 @@ struct SignInView: View {
                     .navigationDestination(isPresented: $navigateStatus)
                     {
                         
-//                        GridView(blurGridLayer: $blurGridLayer)
-//                        WeekdaysView(blurGridLayer: $blurGridLayer)
-                        DynamicView(blurGridLayer: $blurGridLayer)
+                        DynamicView()
                             .navigationBarHidden(true)
                     }
                 }

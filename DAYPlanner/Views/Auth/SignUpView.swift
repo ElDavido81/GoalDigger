@@ -16,7 +16,6 @@ struct SignUpView: View {
     @State private var firstname: String = ""
     @State private var lastname: String = ""
     @State private var navigateStatus = false
-    @State private var blurGridLayer: Bool = false
 //    @ObservedObject var tm: TaskManager
 
 

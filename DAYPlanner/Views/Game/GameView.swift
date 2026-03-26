@@ -9,7 +9,6 @@ import SwiftUI
 
 struct GameView: View {
     
-    @Binding var blurGridLayer: Bool
     
     @State private var hackAngle: Angle = Angle(degrees: -15)
     
@@ -60,7 +59,7 @@ Rectangle()
             }
             .frame(maxWidth: .infinity)
             
-            GamePointsView(blurGridLayer: $blurGridLayer)
+            GamePointsView()
                 .frame(maxWidth: .infinity)
         }
         .padding(.vertical)
@@ -75,5 +74,5 @@ Rectangle()
 }
 
 #Preview {
-    GameView(blurGridLayer: .constant(false))
+    GameView()
 }

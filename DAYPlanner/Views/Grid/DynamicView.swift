@@ -9,16 +9,16 @@ import SwiftUI
 
 struct DynamicView: View {
     
-    @Binding var blurGridLayer: Bool
     
     var body: some View {
         GeometryReader { geometry in
             if geometry.size.width > geometry.size.height {
-                GridView(blurGridLayer: $blurGridLayer)
+                GridView()
             } else {
-                WeekdaysView(blurGridLayer: $blurGridLayer)
+                WeekdaysView()
             }    }
     }
+    
 }
 //#Preview {
 //    DynamicView()

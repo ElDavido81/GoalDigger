@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct LiquidView: View {
+
+    @EnvironmentObject var tm: TaskManager
+
     var body: some View {
         
-//        GeometryReader { geometry in
             ZStack{
-                
-                
-                
                 ZStack{
                     Rectangle()
                         .fill(Color(hex:"c7c7c7"))
@@ -28,29 +27,67 @@ struct LiquidView: View {
                             .overlay(
                                 Ellipse()
                                     .stroke(Color(hex:"c7c7c7"), lineWidth: 5)
-                                
                             )
                         Spacer()
                     }
                 }
                 
-                VStack{
-                    Spacer()
-                        .frame(height: 100)
-//                        .frame(height: geometry.size.height * 0.2)
+                GeometryReader { geo in
+                    let fullHeight = geo.size.height - 20
+                    let safeLiquid = min(tm.lazyLiquid, 10)       // stoppar på 8
+                    let fillRatio = CGFloat(safeLiquid) / 10      // maxvärde 8 motsvarar full höjd
+                    let topGap: CGFloat = 15                      // hur långt från toppen vätskan ska stanna
+
+//                    VStack{
+//                        Spacer()
+//                            .frame(height: fullHeight * (1 - fillRatio) + topGap)
+//                        
+//                        ZStack{
+//                            VStack{
+////                                Spacer()
+//                                Rectangle()
+//                                    .fill(Color(hex: "3a9ff2"))
+//                                    .clipShape(RoundedCorners(radius: 22, corners: [.bottomLeft, .bottomRight]))
+//                                    .frame(width: 28, height: fullHeight * fillRatio - 10)
+//                                    .padding(.bottom, 4)
+////                                Spacer()
+//                            }
+//                            .frame(alignment: .bottom)
+//                        
+//                            
+//                            VStack{
+//                                Ellipse()
+//                                    .fill(Color(hex: "3a9ff2"))
+//                                    .frame(width: 28, height: 12)
+//                                    .overlay(
+//                                        Ellipse()
+//                                            .stroke(Color(hex:"c7c7c7"), lineWidth: 4)
+//                                    )
+//                                    .offset(y: -6)
+//                                Spacer()
+//                            }
+//                            .frame(maxWidth: .infinity)
+//                        }
+//                        
+//                        
+//                        
+//                    }
                     
-                    ZStack{
-                        VStack{
-                            Spacer()
+                    VStack {
+                        Spacer()
+
+                        ZStack(alignment: .bottom) {
+                            
+                            let liquidHeight = max(0, fullHeight * fillRatio - topGap)
+
+                            // Vätskan
                             Rectangle()
                                 .fill(Color(hex: "3a9ff2"))
                                 .clipShape(RoundedCorners(radius: 22, corners: [.bottomLeft, .bottomRight]))
-                                .frame(width: 28, height: .infinity)
-                            Spacer()
-                        }
-                        
-                        VStack{
-                            
+                                .frame(width: 28, height: liquidHeight)
+                                .padding(.bottom, 6)
+
+                            // Toppen (ellipsen)
                             Ellipse()
                                 .fill(Color(hex: "3a9ff2"))
                                 .frame(width: 28, height: 12)
@@ -58,10 +95,16 @@ struct LiquidView: View {
                                     Ellipse()
                                         .stroke(Color(hex:"c7c7c7"), lineWidth: 4)
                                 )
-                            Spacer()
+                                .offset(y: -liquidHeight)
                         }
+                        .frame(maxWidth: .infinity, alignment: .center)
                     }
+                    
+                    
+                    
                 }
+                
+                
                 VStack(spacing:0){
                     Rectangle()
                         .fill(.clear)
@@ -83,11 +126,6 @@ struct LiquidView: View {
                         .frame(height: 15)
                 }
             }
-//            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-
-            
-//        }
-        
     }
 }
 

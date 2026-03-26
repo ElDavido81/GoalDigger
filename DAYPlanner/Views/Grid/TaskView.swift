@@ -22,6 +22,7 @@ struct TaskView: View {
             Text(task.taskTitle)
                 .foregroundStyle(Color.white.opacity(0.9))
                 .font(.system(size: fontSize))
+                .frame(maxWidth: .infinity, alignment: .leading)
             
         }
         

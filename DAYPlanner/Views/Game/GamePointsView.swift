@@ -11,16 +11,15 @@ let gemColors: [Color] = [.blue, .green, .purple, .pink, .orange]
 
 struct GamePointsView: View {
     
-    @Binding var blurGridLayer: Bool
 
     var body: some View {
 
         HStack(spacing: 0){
-            AddTaskButtonView(blurGridLayer: $blurGridLayer)
+            AddTaskButtonView()
             Rectangle()
                 .frame(width: 10)
                 .opacity(0)
-//            AddTaskButtonView(blurGridLayer: $blurGridLayer)
+//            AddTaskButtonView()
 //            Rectangle()
 //                .frame(width: 20)
 //                .opacity(0)
