@@ -79,31 +79,62 @@ struct GridView: View {
             }
         }
     
+//    func showNextWeeks() -> some View {
+//        ForEach(nextweeks, id: \.self) { week in
+//            HStack(spacing: 0) {
+//                
+//                Rectangle()
+//                    .frame(width: 5)
+//                    .opacity(0)
+//                
+//                Text(week)                    .foregroundStyle(.white.opacity(0.4))
+//                    .font(.system(size: 14))
+//                    .fontWeight(.heavy)
+//                Rectangle()
+//                    .frame(width: 5)
+//                    .opacity(0)
+//                WeekView(week: week)
+//                Spacer()
+//            }
+//            .frame(maxHeight: .infinity)
+//            .frame(maxWidth: .infinity)
+//            .background(Color.green.opacity(0.15))
+//            .cornerRadius(10)
+//            .overlay(
+//                RoundedRectangle(cornerRadius: 10)
+//                    .stroke(Color.white, lineWidth: 0)
+//                )
+//        }
+//    }
+
     func showNextWeeks() -> some View {
-        ForEach(nextweeks, id: \.self) { week in
-            HStack(spacing: 0) {
-                
-                Rectangle()
-                    .frame(width: 5)
-                    .opacity(0)
-                
-                Text(week)                    .foregroundStyle(.white.opacity(0.4))
-                    .font(.system(size: 14))
-                    .fontWeight(.heavy)
-                Rectangle()
-                    .frame(width: 5)
-                    .opacity(0)
-                WeekView(week: week)
-                Spacer()
-            }
-            .frame(maxHeight: .infinity)
-            .frame(maxWidth: .infinity)
-            .background(Color.green.opacity(0.15))
-            .cornerRadius(10)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.white, lineWidth: 0)
+        let calendar = Calendar.current
+        let currentWeek = calendar.component(.weekOfYear, from: Date())
+        
+        return VStack { // <-- måste returnera en View
+            ForEach(0..<nextweeks.count, id: \.self) { week in
+                    HStack(spacing: 0) {
+                        Rectangle()
+                            .frame(width: 5)
+                            .opacity(0)
+                    Text(nextweeks[week])
+                        .foregroundStyle(.white.opacity(0.4))
+                        .font(.system(size: 14))
+                        .fontWeight(.heavy)
+                        Rectangle()
+                            .frame(width: 5)
+                            .opacity(0)
+                    WeekView(tm: tm, weekNumber: currentWeek + week + 1)
+                }
+                .frame(maxHeight: .infinity, alignment: .top)
+                .padding(8)
+                .background(Color.green.opacity(0.15))
+                .cornerRadius(15)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(Color.white, lineWidth: 0)
                 )
+            }
         }
     }
     
@@ -149,24 +180,48 @@ struct GridView: View {
         }
     }
     
+//    func showQuarters() -> some View {
+//        ForEach (0..<(quarters.count), id: \.self) { index in
+//            VStack{
+//                Text((quarters[index]))
+//                    .foregroundStyle(.white.opacity(0.4))
+//                    .font(.system(size: 14))
+//                    .fontWeight(.heavy)
+//                QuarterView()
+//            }
+//            .frame(maxHeight: .infinity, alignment: .top)
+//            .padding(.leading, 12)
+//            .padding(.top, 8)
+//            .padding(.bottom, 8)            .background(Color.pink.opacity(0.15))
+//            .cornerRadius(20)
+//            .overlay(
+//                RoundedRectangle(cornerRadius: 20)
+//                    .stroke(Color.white, lineWidth: 0)
+//                )
+//        }
+//    }
+    
     func showQuarters() -> some View {
-        ForEach (0..<(quarters.count), id: \.self) { index in
-            VStack{
-                Text((quarters[index]))
+        
+        ForEach(0..<quarters.count, id: \.self) { index in
+            VStack {
+                
+                Text(quarters[index])
                     .foregroundStyle(.white.opacity(0.4))
                     .font(.system(size: 14))
                     .fontWeight(.heavy)
-                QuarterView()
+                
+                QuarterView(tm: tm, quarterIndex: index) // logik ligger i QuarterView
+                
             }
             .frame(maxHeight: .infinity, alignment: .top)
-            .padding(.leading, 12)
-            .padding(.top, 8)
-            .padding(.bottom, 8)            .background(Color.pink.opacity(0.15))
+            .padding(8)
+            .background(Color.pink.opacity(0.15))
             .cornerRadius(20)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(Color.white, lineWidth: 0)
-                )
+            )
         }
     }
     
