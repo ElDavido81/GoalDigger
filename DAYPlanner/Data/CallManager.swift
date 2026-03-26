@@ -21,7 +21,6 @@ class CallManager: ObservableObject {
                         }
                         DispatchQueue.main.async {
                             self.allTasks = userItems
-                            print("Användarens tasks har hämtats: \(self.allTasks)")
                             completion()
                         }
                     } else {
@@ -68,7 +67,11 @@ class CallManager: ObservableObject {
         
         if let token = TokenManager.shared.bearerToken {
             request.setValue(token, forHTTPHeaderField: "Authorization")
-        }
+            print("Using token:", token)
+        }else {
+                    print("No token available!")
+                }
+        
         
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -85,7 +88,6 @@ class CallManager: ObservableObject {
             request.httpBody = jsonData
             
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("JSON som skickas: \(jsonString)")
             }
             
             
@@ -127,14 +129,12 @@ class CallManager: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "PATCH"
         
-        // ✅ EXAKT samma som i postTask
         if let token = TokenManager.shared.bearerToken {
             request.setValue(token, forHTTPHeaderField: "Authorization")
         }
         
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // ✅ Hämta userId på samma sätt som du gör i andra delar
         guard let userId = UserDefaults.standard.string(forKey: "loggedInUsername") else {
             completion(.failure(NSError(domain: "No userId", code: 0)))
             return
@@ -156,6 +156,78 @@ class CallManager: ObservableObject {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    completion(.failure(NSError(domain: "No response", code: 0)))
+                    return
+                }
+                
+                print("Status:", httpResponse.statusCode)
+                
+                if let data = data, let text = String(data: data, encoding: .utf8) {
+                    print("Response:", text)
+                }
+                
+                if 200..<300 ~= httpResponse.statusCode {
+                    completion(.success(()))
+                } else {
+                    completion(.failure(NSError(domain: "Invalid response", code: httpResponse.statusCode)))
+                }
+            }
+        }.resume()
+    }
+    
+    
+    func snoozeTask(taskId: String, currentGoalDateString: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        
+        guard let url = URL(string: "https://opi23mmfy7.execute-api.eu-north-1.amazonaws.com/api/tasks") else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "PATCH"
+        
+        if let token = TokenManager.shared.bearerToken {
+            request.setValue(token, forHTTPHeaderField: "Authorization")
+        }
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        guard let userId = UserDefaults.standard.string(forKey: "loggedInUsername") else {
+            completion(.failure(NSError(domain: "No userId", code: 0)))
+            return
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let currentGoalDate = formatter.date(from: currentGoalDateString) else {
+            completion(.failure(NSError(domain: "Invalid date string", code: 0)))
+            return
+        }
+        
+        let nextDay = Calendar.current.date(byAdding: .day, value: 1, to: currentGoalDate) ?? currentGoalDate
+        let nextDayString = formatter.string(from: nextDay)
+        
+        let body: [String: Any] = [
+            "userId": userId,
+            "id": taskId,
+            "goalDate": nextDayString
+        ]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
                 if let error = error {
                     completion(.failure(error))
                     return

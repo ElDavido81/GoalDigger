@@ -34,44 +34,9 @@ struct LiquidView: View {
                 
                 GeometryReader { geo in
                     let fullHeight = geo.size.height - 20
-                    let safeLiquid = min(tm.lazyLiquid, 10)       // stoppar på 8
-                    let fillRatio = CGFloat(safeLiquid) / 10      // maxvärde 8 motsvarar full höjd
-                    let topGap: CGFloat = 15                      // hur långt från toppen vätskan ska stanna
-
-//                    VStack{
-//                        Spacer()
-//                            .frame(height: fullHeight * (1 - fillRatio) + topGap)
-//                        
-//                        ZStack{
-//                            VStack{
-////                                Spacer()
-//                                Rectangle()
-//                                    .fill(Color(hex: "3a9ff2"))
-//                                    .clipShape(RoundedCorners(radius: 22, corners: [.bottomLeft, .bottomRight]))
-//                                    .frame(width: 28, height: fullHeight * fillRatio - 10)
-//                                    .padding(.bottom, 4)
-////                                Spacer()
-//                            }
-//                            .frame(alignment: .bottom)
-//                        
-//                            
-//                            VStack{
-//                                Ellipse()
-//                                    .fill(Color(hex: "3a9ff2"))
-//                                    .frame(width: 28, height: 12)
-//                                    .overlay(
-//                                        Ellipse()
-//                                            .stroke(Color(hex:"c7c7c7"), lineWidth: 4)
-//                                    )
-//                                    .offset(y: -6)
-//                                Spacer()
-//                            }
-//                            .frame(maxWidth: .infinity)
-//                        }
-//                        
-//                        
-//                        
-//                    }
+                    let safeLiquid = min(tm.lazyLiquid, 10)
+                    let fillRatio = CGFloat(safeLiquid) / 10
+                    let topGap: CGFloat = 15
                     
                     VStack {
                         Spacer()
@@ -80,14 +45,12 @@ struct LiquidView: View {
                             
                             let liquidHeight = max(0, fullHeight * fillRatio - topGap)
 
-                            // Vätskan
                             Rectangle()
                                 .fill(Color(hex: "3a9ff2"))
                                 .clipShape(RoundedCorners(radius: 22, corners: [.bottomLeft, .bottomRight]))
                                 .frame(width: 28, height: liquidHeight)
                                 .padding(.bottom, 6)
 
-                            // Toppen (ellipsen)
                             Ellipse()
                                 .fill(Color(hex: "3a9ff2"))
                                 .frame(width: 28, height: 12)

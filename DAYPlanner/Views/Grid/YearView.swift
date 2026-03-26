@@ -46,10 +46,6 @@ struct YearView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .onAppear{
-            print("Året som skickas med är: \(yearNumber)")
-            print("Current year: \(currentYear)")
-            }
         }
     }
 

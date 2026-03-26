@@ -25,9 +25,6 @@ let quarters: [String] = [
     "1 month", "3 months", "6 months"
 ]
 
-//let years: [String] = [
-//    "2026", "2027", "2028"
-//]
 let currentYear = Calendar.current.component(.year, from: Date())
 let years: [Int] = (0...2).map {
     currentYear + $0
@@ -40,6 +37,9 @@ struct GridView: View {
     
     @EnvironmentObject var tm: TaskManager
     @EnvironmentObject var callManager: CallManager
+    
+    @State private var selectedDate: Date? = nil
+    @State private var showWeekdaySheet = false
     
     
     func showWeekdays() -> some View {
@@ -62,35 +62,20 @@ struct GridView: View {
             }
             .frame(maxHeight: .infinity)
             .frame(maxWidth: .infinity)
-            .background(Color(hex:"3a9ff2")) // Lägg till bakgrundsfärg här
-            .cornerRadius(5) // Rundade hörn för hela HStack
+            .background(Color(hex:"3a9ff2"))
+            .cornerRadius(5)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0)
                 )
             
             .onTapGesture {
-                switch index {
-                case 0:
-                    print("monday trycktes")
-                    fullView.toggle()
-                    print(fullView)
-                case 1:
-                    print("tues trycktes")
-                case 2:
-                    print("wed trycktes")
-                case 3:
-                    print("thur trycktes")
-                case 4:
-                    print("fri trycktes")
-                case 5:
-                    print("sat trycktes")
-                case 6:
-                    print("sun trycktes")
-                default:
-                    break
-                }
-                }
+                let calendar = Calendar.current
+                                let today = Date()
+                                let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: today)?.start ?? today
+                                selectedDate = calendar.date(byAdding: .day, value: index, to: startOfWeek) ?? today
+                                showWeekdaySheet = true
+            }
             }
         }
     
@@ -113,12 +98,11 @@ struct GridView: View {
             }
             .frame(maxHeight: .infinity)
             .frame(maxWidth: .infinity)
-//            .border(Color.white, width: 3)
-            .background(Color.green.opacity(0.15)) // Lägg till bakgrundsfärg här
-            .cornerRadius(10) // Rundade hörn för hela HStack
+            .background(Color.green.opacity(0.15))
+            .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0)
                 )
         }
     }
@@ -135,19 +119,16 @@ struct GridView: View {
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)
-//            .border(Color.white, width: 3)
-            .background(Color.purple.opacity(0.15)) // Lägg till bakgrundsfärg här
-            .cornerRadius(15) // Rundade hörn för hela HStack
+            .background(Color.purple.opacity(0.15))
+            .cornerRadius(15)
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0)
                 )
         }
     }
     
     func showSecondMonths() -> some View {
-//        let currentMonth = Calendar.current.component(.month, from: Date())
-//        let nextMonth = (currentMonth % 12) + 1
         
         ForEach (6..<(months.count), id: \.self) { month in
             VStack{
@@ -159,12 +140,11 @@ struct GridView: View {
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(8)
-//            .border(Color.white, width: 3)
-            .background(Color.purple.opacity(0.15)) // Lägg till bakgrundsfärg här
-            .cornerRadius(15) // Rundade hörn för hela HStack
+            .background(Color.purple.opacity(0.15))
+            .cornerRadius(15)
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0)
                 )
         }
     }
@@ -181,11 +161,11 @@ struct GridView: View {
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(.leading, 12)
             .padding(.top, 8)
-            .padding(.bottom, 8)            .background(Color.pink.opacity(0.15)) // Lägg till bakgrundsfärg här
-            .cornerRadius(20) // Rundade hörn för hela HStack
+            .padding(.bottom, 8)            .background(Color.pink.opacity(0.15))
+            .cornerRadius(20)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0)
                 )
         }
     }
@@ -200,16 +180,26 @@ struct GridView: View {
                     .shadow(radius: 8)
                 YearView(tm: tm, yearNumber: year)
             }
+            .onTapGesture {
+                // Visa allt på detta år → använd 1 jan som "startdatum"
+                let calendar = Calendar.current
+                if let yearStart = calendar.date(from: DateComponents(year: year, month: 1, day: 1)) {
+                    selectedDate = yearStart
+                    showWeekdaySheet = true
+                }
+            }
+            
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(.leading, 15)
             .padding(.top, 5)
             .padding(.bottom, 8)
-            .background(Color.orange.opacity(0.15)) // Lägg till bakgrundsfärg här
-            .cornerRadius(30) // Rundade hörn för hela HStack
+            .background(Color.orange.opacity(0.15))
+            .cornerRadius(30)
             .overlay(
                 RoundedRectangle(cornerRadius: 30)
-                    .stroke(Color.white, lineWidth: 0) // Ramen med rundade hörn
+                    .stroke(Color.white, lineWidth: 0)
                 )
+
         }
     }
     
@@ -252,8 +242,15 @@ struct GridView: View {
                 tm.incompleteTasks = callManager.getIncompleteTasks()
             }
         }
+        .sheet(isPresented: $showWeekdaySheet) {
+            if let date = selectedDate {
+                WeekdayView(tm: tm, selectedDate: date)
+            }
+        }
     }
+
 }
+
 
 
 //#Preview {

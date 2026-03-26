@@ -86,8 +86,8 @@ struct SignInView: View {
             }
                     .navigationDestination(isPresented: $navigateStatus)
                     {
-                        
-                        DynamicView()
+                        StartView()
+//                        DynamicView()
                             .navigationBarHidden(true)
                     }
                 }

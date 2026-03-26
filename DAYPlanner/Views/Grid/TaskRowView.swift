@@ -8,20 +8,16 @@ struct TaskRowView: View {
     
     var body: some View {
         HStack {
-            // Checkbox
             Button(action: {
                 guard let index = tm.incompleteTasks.firstIndex(where: { $0.id == task.id }) else { return }
                 
-                // Toggle lokalt först
                 tm.incompleteTasks[index].taskStatus.toggle()
                 let newStatus = tm.incompleteTasks[index].taskStatus
                 
-                // Skicka PATCH till backend
                 callManager.updateTaskStatus(taskId: task.id, status: newStatus) { result in
                     DispatchQueue.main.async {
                         switch result {
                             case .success():
-                                // Om tasken markerad som klar → ta bort från listan
                                 if newStatus, let removeIndex = tm.incompleteTasks.firstIndex(where: { $0.id == task.id }) {
                                     tm.incompleteTasks.remove(at: removeIndex)
                                     tm.lazyLiquid += 1
@@ -29,7 +25,6 @@ struct TaskRowView: View {
                             }
                         case .failure(let error):
                             print("Fel vid uppdatering: \(error.localizedDescription)")
-                            // Återställ status om det misslyckas
                             if let restoreIndex = tm.incompleteTasks.firstIndex(where: { $0.id == task.id }) {
                                 tm.incompleteTasks[restoreIndex].taskStatus.toggle()
                             }
@@ -50,7 +45,36 @@ struct TaskRowView: View {
             }
             .buttonStyle(PlainButtonStyle())
             
-            // Task titel
+            Button(action: {
+                callManager.snoozeTask(taskId: task.id, currentGoalDateString: task.goalDate) { result in
+                    switch result {
+                        case .success():
+                        if let index = tm.incompleteTasks.firstIndex(where: { $0.id == task.id }) {
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "yyyy-MM-dd"
+                            if let currentDate = formatter.date(from: tm.incompleteTasks[index].goalDate) {
+                                let nextDay = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
+                                tm.incompleteTasks[index].goalDate = formatter.string(from: nextDay)
+                            }
+                        }
+
+                        tm.lazyLiquid -= 1
+                        print("\(tm.lazyLiquid)")
+
+                        case .failure(let error):
+                            print("Error moving task:", error.localizedDescription)
+                    }
+                }
+            }) {
+                Image(systemName: "arrow.right")
+                    .foregroundColor(.white)
+                    .frame(width: 24, height: 24)
+                    .background(Color.blue.opacity(0.6))
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+            }
+            .opacity(tm.lazyLiquid > 0 ? 1 : 0)
+            .buttonStyle(PlainButtonStyle())
+            
             Text(task.taskTitle)
                 .foregroundColor(.white)
                 .font(.system(size: 18))
